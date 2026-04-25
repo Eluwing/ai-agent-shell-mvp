@@ -16,8 +16,9 @@ Do not create global domain folders like:
 ```txt
 src/components/
 src/hooks/
-src/services/
-src/utils/
+src/actions/
+src/api/
+src/lib/
 src/types/
 ```
 
@@ -26,7 +27,8 @@ Instead, place files in the owning feature:
 ```txt
 features/workspace/components/
 features/workspace/hooks/
-features/agent/tools/services/
+features/agent/tools/actions/
+features/agent/tools/adapters/
 features/agent/timeline/types/
 ```
 
@@ -39,15 +41,16 @@ Use these names consistently:
 - `components/`
 - `hooks/`
 - `stores/`
-- `services/`
-- `utils/`
+- `actions/`
+- `api/`
+- `adapters/`
+- `lib/`
 - `constants/`
 - `types/`
 
 Use these only as needed:
 
 - `schemas/`
-- `adapters/`
 - `mappers/`
 - `fixtures/`
 - `tests/`
@@ -69,7 +72,7 @@ features/agent/
   timeline/
 ```
 
-Each sub-feature can have its own `components`, `hooks`, `services`, `utils`, `constants`, and `types` directories.
+Each sub-feature can have its own `components`, `hooks`, `stores`, `actions`, `api`, `adapters`, `lib`, `constants`, and `types` directories.
 
 ## Product Notes
 
@@ -77,4 +80,3 @@ Each sub-feature can have its own `components`, `hooks`, `services`, `utils`, `c
 - Risky actions must require user approval.
 - User-facing strings should be translatable.
 - Keep the React renderer, Electron main process, and agent runtime separated by typed boundaries.
-

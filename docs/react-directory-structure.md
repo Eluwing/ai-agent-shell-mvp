@@ -28,8 +28,9 @@
 src/
   components/
   hooks/
-  services/
-  utils/
+  actions/
+  api/
+  lib/
   types/
 ```
 
@@ -40,11 +41,13 @@ src/
 ```txt
 features/workspace/components/
 features/workspace/hooks/
-features/workspace/services/
+features/workspace/actions/
+features/workspace/api/
 features/workspace/types/
 
 features/agent/tools/components/
-features/agent/tools/services/
+features/agent/tools/actions/
+features/agent/tools/adapters/
 features/agent/tools/types/
 ```
 
@@ -68,8 +71,10 @@ features/
 components/
 hooks/
 stores/
-services/
-utils/
+actions/
+api/
+adapters/
+lib/
 constants/
 types/
 ```
@@ -81,10 +86,37 @@ types/
 | `components/` | React 컴포넌트 |
 | `hooks/` | React custom hook |
 | `stores/` | Zustand store 또는 client state |
-| `services/` | side effect가 있거나 workflow/API/IPC를 실행하는 로직 |
-| `utils/` | side effect 없는 순수 함수 |
+| `actions/` | 사용자의 의도나 업무 단위 실행 로직 |
+| `api/` | IPC, HTTP, runtime bridge 같은 외부 경계 호출 |
+| `adapters/` | OpenAI, Electron, CDP 등 외부 구현체를 내부 인터페이스에 맞추는 코드 |
+| `lib/` | feature 내부 순수 로직 |
 | `constants/` | 상수 |
 | `types/` | TypeScript 타입 |
+
+### `services/`를 쓰지 않는 이유
+
+`services/`는 의미가 넓어 시간이 지나면 다음 코드가 한 폴더에 섞일 가능성이 높다.
+
+```txt
+run-agent.ts
+execute-tool-call.ts
+preview-graph.ts
+create-workspace-view.ts
+approval-gate.ts
+openai-client.ts
+electron-ipc.ts
+```
+
+이렇게 되면 유스케이스, 외부 호출, adapter, 순수 정책 로직이 모두 `services/`에 들어가고, 결국 또 하나의 애매한 공용 폴더가 된다.
+
+따라서 이 프로젝트에서는 `services/`를 기본 디렉토리로 사용하지 않는다. 대신 의도를 더 명확하게 나눈다.
+
+```txt
+actions/   사용자의 의도나 업무 단위 실행
+api/       IPC, HTTP, runtime bridge 같은 외부 경계 호출
+adapters/  외부 구현체를 내부 인터페이스로 변환
+lib/       feature 내부 순수 로직
+```
 
 ### 4. 큰 feature는 sub-feature로 한 번 더 나눈다
 
@@ -107,8 +139,10 @@ features/
 features/agent/tools/
   components/
   hooks/
-  services/
-  utils/
+  actions/
+  api/
+  adapters/
+  lib/
   constants/
   types/
   schemas/
@@ -124,14 +158,14 @@ features/agent/tools/
 shared/components/ui/button.tsx
 shared/components/ui/card.tsx
 shared/i18n/hooks/use-translation.ts
-shared/utils/cn.ts
+shared/lib/cn.ts
 ```
 
 나쁜 예:
 
 ```txt
 shared/components/agent-control-panel.tsx
-shared/utils/run-agent.ts
+shared/lib/run-agent.ts
 shared/types/workspace-types.ts
 ```
 
@@ -164,7 +198,9 @@ src/
           preview-result-card.tsx
         hooks/
           use-agent-preview.ts
-        services/
+        actions/
+          run-preview-agent.ts
+        lib/
           preview-graph.ts
         types/
           preview-types.ts
@@ -176,8 +212,11 @@ src/
           agent-run-status.tsx
         hooks/
           use-agent-runs.ts
-        services/
-          run-agent.ts
+        actions/
+          start-agent-run.ts
+          stop-agent-run.ts
+        api/
+          create-agent-run.ts
         types/
           agent-run-types.ts
 
@@ -187,10 +226,13 @@ src/
           tool-call-row.tsx
         hooks/
           use-tool-call.ts
-        services/
-          tool-registry.ts
+        actions/
           execute-tool-call.ts
-        utils/
+        adapters/
+          electron-browser-tool-adapter.ts
+          openai-tool-adapter.ts
+        lib/
+          tool-registry.ts
           validate-tool-input.ts
         constants/
           browser-tool-names.ts
@@ -208,9 +250,11 @@ src/
           use-approval-request.ts
         stores/
           approval-store.ts
-        services/
+        actions/
+          approve-request.ts
+          reject-request.ts
+        lib/
           approval-gate.ts
-        utils/
           format-approval-risk.ts
         types/
           approval-types.ts
@@ -221,7 +265,7 @@ src/
           timeline-event-row.tsx
         hooks/
           use-agent-timeline.ts
-        utils/
+        lib/
           group-timeline-events.ts
           format-timeline-event.ts
         types/
@@ -237,9 +281,11 @@ src/
         use-active-workspace.ts
       stores/
         workspace-store.ts
-      services/
+      actions/
+        open-workspace.ts
+      api/
         create-workspace-view.ts
-      utils/
+      lib/
         resolve-workspace-url.ts
       constants/
         default-workspaces.ts
@@ -265,11 +311,11 @@ src/
       types/
         runtime-types.ts
 
-  shared/
-    components/
-      ui/
-        button.tsx
-        card.tsx
+shared/
+  components/
+    ui/
+      button.tsx
+      card.tsx
 
     i18n/
       hooks/
@@ -279,12 +325,12 @@ src/
       types/
         i18n-types.ts
 
-    hooks/
-      use-disclosure.ts
-      use-debounce.ts
+  hooks/
+    use-disclosure.ts
+    use-debounce.ts
 
-    utils/
-      cn.ts
+  lib/
+    cn.ts
 
   db/
     schema.ts
@@ -345,7 +391,8 @@ MVP와 smoke test용 preview agent 기능이다.
 
 ```txt
 features/agent/preview/hooks/use-agent-preview.ts
-features/agent/preview/services/preview-graph.ts
+features/agent/preview/actions/run-preview-agent.ts
+features/agent/preview/lib/preview-graph.ts
 ```
 
 #### `agent/runs/`
@@ -355,7 +402,7 @@ features/agent/preview/services/preview-graph.ts
 예:
 
 ```txt
-features/agent/runs/services/run-agent.ts
+features/agent/runs/actions/start-agent-run.ts
 features/agent/runs/hooks/use-agent-runs.ts
 features/agent/runs/types/agent-run-types.ts
 ```
@@ -468,8 +515,10 @@ db/
 components/
 hooks/
 stores/
-services/
-utils/
+actions/
+api/
+adapters/
+lib/
 constants/
 types/
 ```
@@ -479,7 +528,6 @@ types/
 | Directory | 추가 시점 |
 | --- | --- |
 | `schemas/` | tool input, form, IPC payload validation이 필요할 때 |
-| `adapters/` | OpenAI, Anthropic, Electron, CDP 등 외부 구현을 내부 인터페이스에 맞출 때 |
 | `mappers/` | DB/API 응답을 UI model로 변환하는 코드가 많아질 때 |
 | `fixtures/` | 개발용 mock data가 필요할 때 |
 | `tests/` | feature 내부 테스트 파일이 많아질 때 |
@@ -532,31 +580,66 @@ features/workspace/stores/workspace-store.ts
 features/layout/stores/layout-store.ts
 ```
 
-### Side effect 또는 workflow
+### 사용자 의도 또는 업무 단위 실행
 
 ```txt
-services/
+actions/
 ```
 
 예:
 
 ```txt
-features/agent/runs/services/run-agent.ts
-features/agent/tools/services/execute-tool-call.ts
+features/agent/runs/actions/start-agent-run.ts
+features/agent/tools/actions/execute-tool-call.ts
 ```
 
-### 순수 함수
+`actions/`는 "무언가를 한다"에 가까운 유스케이스를 둔다. 내부에서 `api/`, `stores/`, `adapters/`, `lib/`를 조합할 수 있다.
+
+### 외부 경계 호출
 
 ```txt
-utils/
+api/
 ```
 
 예:
 
 ```txt
-features/agent/timeline/utils/format-timeline-event.ts
-features/workspace/utils/resolve-workspace-url.ts
+features/runtime/api/get-runtime-versions.ts
+features/workspace/api/create-workspace-view.ts
+features/agent/tools/api/capture-page.ts
 ```
+
+`api/`는 Electron IPC, HTTP, runtime bridge, renderer-facing client 호출처럼 외부 경계를 넘는 코드를 둔다.
+
+### 외부 구현체 adapter
+
+```txt
+adapters/
+```
+
+예:
+
+```txt
+features/agent/tools/adapters/electron-browser-tool-adapter.ts
+features/agent/tools/adapters/openai-tool-adapter.ts
+```
+
+`adapters/`는 OpenAI, Electron, CDP, Playwright-like interface처럼 교체 가능한 외부 구현을 내부 인터페이스에 맞춘다.
+
+### Feature 내부 순수 로직
+
+```txt
+lib/
+```
+
+예:
+
+```txt
+features/agent/timeline/lib/format-timeline-event.ts
+features/workspace/lib/resolve-workspace-url.ts
+```
+
+`lib/`는 가능하면 side effect 없는 순수 함수와 도메인 계산 로직만 둔다.
 
 ### 상수
 
@@ -600,7 +683,7 @@ src/components/ui/card.tsx
 -> src/shared/components/ui/card.tsx
 
 src/lib/utils.ts
--> src/shared/utils/cn.ts
+-> src/shared/lib/cn.ts
 
 src/i18n/translations.ts
 -> src/shared/i18n/constants/translations.ts
@@ -614,7 +697,7 @@ src/store/agent-store.ts
 -> src/features/layout/stores/layout-store.ts
 
 src/agent/graph.ts
--> src/features/agent/preview/services/preview-graph.ts
+-> src/features/agent/preview/lib/preview-graph.ts
 
 src/db/schema.ts
 -> 유지
@@ -625,7 +708,7 @@ src/db/schema.ts
 실제 리팩토링은 다음 순서로 진행한다.
 
 ```txt
-1. shared/components, shared/i18n, shared/utils 이동
+1. shared/components, shared/i18n, shared/lib 이동
 2. layout feature 생성
 3. workspace feature 생성
 4. runtime feature 생성
@@ -636,4 +719,3 @@ src/db/schema.ts
 9. commit
 10. push
 ```
-

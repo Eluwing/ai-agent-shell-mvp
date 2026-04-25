@@ -10,7 +10,7 @@ Before making structural or architectural changes, read:
 ## Project Conventions
 
 - Use the feature-first directory structure documented in `docs/react-directory-structure.md`.
-- Do not add domain code to broad global folders such as `src/components`, `src/hooks`, `src/services`, `src/utils`, or `src/types`.
+- Do not add domain code to broad global folders such as `src/components`, `src/hooks`, `src/actions`, `src/api`, `src/lib`, or `src/types`.
 - Put files under the feature or sub-feature that owns the behavior.
 - Use `shared/` only for reusable code that does not know about agent, workspace, runtime, approval, timeline, or layout domain concepts.
 
@@ -21,15 +21,16 @@ Use these directories inside features and sub-features:
 - `components/` for React components.
 - `hooks/` for React hooks.
 - `stores/` for Zustand stores.
-- `services/` for IPC/API/workflow side effects.
-- `utils/` for pure functions.
+- `actions/` for user intent or workflow-level use cases.
+- `api/` for IPC/API/runtime bridge calls.
+- `adapters/` for external implementation wrappers.
+- `lib/` for feature-local pure functions.
 - `constants/` for constants.
 - `types/` for TypeScript types.
 
 Add optional directories only when useful:
 
 - `schemas/`
-- `adapters/`
 - `mappers/`
 - `fixtures/`
 - `tests/`
@@ -56,4 +57,3 @@ Agent browser automation, tool calls, approvals, and timeline code should not be
 - Keep renderer-to-Electron interactions typed and narrow.
 - Risky browser automation actions should pass through an approval gate.
 - Prefer incremental, scoped changes that preserve the current MVP behavior.
-
