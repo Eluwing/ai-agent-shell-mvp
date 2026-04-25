@@ -5,6 +5,7 @@ This repository is an MVP for an Electron + React desktop AI agent shell.
 Before making structural or architectural changes, read:
 
 - `docs/react-directory-structure.md`
+- `docs/electron-architecture.md`
 - `docs/tech-stack-and-progress.md`
 
 ## Project Conventions
@@ -13,6 +14,7 @@ Before making structural or architectural changes, read:
 - Do not add domain code to broad global folders such as `src/components`, `src/hooks`, `src/actions`, `src/api`, `src/lib`, or `src/types`.
 - Put files under the feature or sub-feature that owns the behavior.
 - Use `shared/` only for reusable code that does not know about agent, workspace, runtime, approval, timeline, or layout domain concepts.
+- Follow the Electron main/preload/IPC structure in `docs/electron-architecture.md`.
 
 ## Folder Meaning
 
@@ -56,4 +58,5 @@ Agent browser automation, tool calls, approvals, and timeline code should not be
 - Keep UI strings in the i18n layer.
 - Keep renderer-to-Electron interactions typed and narrow.
 - Risky browser automation actions should pass through an approval gate.
+- Do not expose raw `ipcRenderer`, Node APIs, or `webContents` to the React renderer.
 - Prefer incremental, scoped changes that preserve the current MVP behavior.

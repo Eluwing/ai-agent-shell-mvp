@@ -5,6 +5,7 @@ This repository is an MVP for an Electron + React desktop AI agent shell.
 Before changing architecture or directory structure, read:
 
 - `docs/react-directory-structure.md`
+- `docs/electron-architecture.md`
 - `docs/tech-stack-and-progress.md`
 
 ## Required Structure
@@ -80,3 +81,4 @@ Each sub-feature can have its own `components`, `hooks`, `stores`, `actions`, `a
 - Risky actions must require user approval.
 - User-facing strings should be translatable.
 - Keep the React renderer, Electron main process, and agent runtime separated by typed boundaries.
+- Do not expose raw `ipcRenderer`, Node APIs, or `webContents` to the React renderer.

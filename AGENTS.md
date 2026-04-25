@@ -5,6 +5,7 @@ This repository is an MVP for an Electron + React desktop AI agent shell.
 Before making structural or architectural changes, read these documents:
 
 - `docs/react-directory-structure.md`
+- `docs/electron-architecture.md`
 - `docs/tech-stack-and-progress.md`
 
 ## Core Rules
@@ -14,6 +15,7 @@ Before making structural or architectural changes, read these documents:
 - Place code inside the feature that owns it.
 - Use `shared/` only for code that has no domain knowledge.
 - Keep Electron-specific code outside React features unless it is a typed renderer-facing API wrapper.
+- Follow the Electron main/preload/IPC boundaries documented in `docs/electron-architecture.md`.
 
 ## Feature Folder Roles
 
@@ -58,3 +60,4 @@ Do not let one large `agent/components` or `agent/hooks` folder become a dumping
 - Deleting, submitting, sending, permission changes, payment-related actions, or sensitive data entry must require explicit user approval.
 - Keep user-facing text translatable through the shared i18n layer.
 - Prefer small, typed interfaces between renderer, Electron main process, and agent runtime.
+- Do not expose raw `ipcRenderer`, Node APIs, or `webContents` to the React renderer.
