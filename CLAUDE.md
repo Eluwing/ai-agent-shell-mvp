@@ -1,0 +1,59 @@
+# Claude Instructions
+
+This repository is an MVP for an Electron + React desktop AI agent shell.
+
+Before making structural or architectural changes, read:
+
+- `docs/react-directory-structure.md`
+- `docs/tech-stack-and-progress.md`
+
+## Project Conventions
+
+- Use the feature-first directory structure documented in `docs/react-directory-structure.md`.
+- Do not add domain code to broad global folders such as `src/components`, `src/hooks`, `src/services`, `src/utils`, or `src/types`.
+- Put files under the feature or sub-feature that owns the behavior.
+- Use `shared/` only for reusable code that does not know about agent, workspace, runtime, approval, timeline, or layout domain concepts.
+
+## Folder Meaning
+
+Use these directories inside features and sub-features:
+
+- `components/` for React components.
+- `hooks/` for React hooks.
+- `stores/` for Zustand stores.
+- `services/` for IPC/API/workflow side effects.
+- `utils/` for pure functions.
+- `constants/` for constants.
+- `types/` for TypeScript types.
+
+Add optional directories only when useful:
+
+- `schemas/`
+- `adapters/`
+- `mappers/`
+- `fixtures/`
+- `tests/`
+- `assets/`
+- `config/`
+- `commands/`
+
+## Agent Feature
+
+The `features/agent` domain should remain split into sub-features:
+
+- `core`
+- `preview`
+- `runs`
+- `tools`
+- `approvals`
+- `timeline`
+
+Agent browser automation, tool calls, approvals, and timeline code should not be mixed into a single flat folder.
+
+## Implementation Notes
+
+- Keep UI strings in the i18n layer.
+- Keep renderer-to-Electron interactions typed and narrow.
+- Risky browser automation actions should pass through an approval gate.
+- Prefer incremental, scoped changes that preserve the current MVP behavior.
+
