@@ -1,0 +1,70 @@
+export type Locale = "ko" | "ja" | "en";
+
+export const localeLabels: Record<Locale, string> = {
+  ko: "KO",
+  ja: "JA",
+  en: "EN",
+};
+
+export const translations: Record<Locale, Record<string, string>> = {
+  ko: {
+    "app.subtitle": "Electron + React + LangGraph 기본 구동 확인",
+    "layout.native": "Native",
+    "layout.pip": "PIP",
+    "layout.split": "Split",
+    "language.label": "언어",
+    "browser.placeholderTitle": "WebView 영역",
+    "browser.placeholderSubtitle":
+      "다음 단계에서 실제 SaaS WebContentsView를 붙입니다.",
+    "browser.placeholderChrome": "{{workspace}} WebContentsView placeholder",
+    "agent.control": "Agent Control",
+    "agent.currentMode": "현재 모드",
+    "agent.runPreview": "Preview Graph 실행",
+    "agent.waiting": "대기 중",
+    "agent.noAction": "실행할 작업이 없습니다",
+    "agent.previewResult": "활성 {{workspace}} workspace를 살펴봅니다",
+    "runtime.title": "Runtime",
+    "runtime.sqlite": "SQLite schema: ready",
+    "runtime.openai": "OpenAI SDK: installed",
+  },
+  ja: {
+    "app.subtitle": "Electron + React + LangGraph の基本起動確認",
+    "layout.native": "Native",
+    "layout.pip": "PIP",
+    "layout.split": "Split",
+    "language.label": "言語",
+    "browser.placeholderTitle": "WebView 領域",
+    "browser.placeholderSubtitle":
+      "次のステップで実際の SaaS WebContentsView を接続します。",
+    "browser.placeholderChrome": "{{workspace}} WebContentsView placeholder",
+    "agent.control": "Agent Control",
+    "agent.currentMode": "現在のモード",
+    "agent.runPreview": "Preview Graph 実行",
+    "agent.waiting": "待機中",
+    "agent.noAction": "実行するアクションはありません",
+    "agent.previewResult": "アクティブな {{workspace}} workspace を確認します",
+    "runtime.title": "Runtime",
+    "runtime.sqlite": "SQLite schema: ready",
+    "runtime.openai": "OpenAI SDK: installed",
+  },
+  en: {
+    "app.subtitle": "Electron + React + LangGraph smoke test",
+    "layout.native": "Native",
+    "layout.pip": "PIP",
+    "layout.split": "Split",
+    "language.label": "Language",
+    "browser.placeholderTitle": "WebView Area",
+    "browser.placeholderSubtitle":
+      "The real SaaS WebContentsView will be attached in the next step.",
+    "browser.placeholderChrome": "{{workspace}} WebContentsView placeholder",
+    "agent.control": "Agent Control",
+    "agent.currentMode": "Current mode",
+    "agent.runPreview": "Run Preview Graph",
+    "agent.waiting": "Waiting",
+    "agent.noAction": "No action",
+    "agent.previewResult": "Inspect the active {{workspace}} workspace",
+    "runtime.title": "Runtime",
+    "runtime.sqlite": "SQLite schema: ready",
+    "runtime.openai": "OpenAI SDK: installed",
+  },
+};
