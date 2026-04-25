@@ -1,11 +1,11 @@
 /// <reference types="vite/client" />
 
-interface Window {
-  agentShell?: {
-    versions: () => Promise<{
-      electron: string;
-      chrome: string;
-      node: string;
-    }>;
-  };
+import type { ElectronApi } from "@/shared/ipc/electron-api";
+
+declare global {
+  interface Window {
+    agentShell?: ElectronApi;
+  }
 }
+
+export {};

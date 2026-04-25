@@ -89,6 +89,8 @@ Agent Runtime
 
 ## 추천 최종 구조
 
+문서의 예시는 TypeScript 파일명으로 표현한다. 현재 MVP 구현은 Electron main/preload 별도 TypeScript 빌드 파이프라인을 아직 두지 않았기 때문에 실제 파일은 동일한 구조의 `.cjs` 파일로 시작한다. Electron main 빌드가 추가되면 `.ts`로 전환한다.
+
 ```txt
 electron/
   main/
@@ -645,4 +647,3 @@ electron/main.ts
 ```
 
 기능별 handler와 manager로 분리한다.
-
