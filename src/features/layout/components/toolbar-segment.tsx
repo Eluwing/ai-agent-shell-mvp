@@ -1,14 +1,10 @@
 import * as React from "react";
 import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/lib/cn";
-import { useToolbarGroup } from "./toolbar-group";
 
 type ToolbarSegmentProps = {
   active?: boolean;
   ariaLabel: string;
-  children?: React.ReactNode;
-  className?: string;
-  mode?: "icon" | "text";
   onClick: () => void;
   icon?: React.ReactElement<{ className?: string }>;
 };
@@ -16,19 +12,12 @@ type ToolbarSegmentProps = {
 export function ToolbarSegment({
   active = false,
   ariaLabel,
-  children,
-  className,
-  mode = "icon",
   onClick,
   icon,
 }: ToolbarSegmentProps) {
-  const { density } = useToolbarGroup();
-  const iconSizeClassName = density === "compact" ? "size-3" : "size-[13px]";
-  const textSizeClassName = density === "compact" ? "text-xs" : "text-xs";
-
   const renderedIcon = icon
     ? React.cloneElement(icon, {
-        className: cn(icon.props.className, iconSizeClassName),
+        className: cn(icon.props.className, "size-3"),
       })
     : null;
 
@@ -37,16 +26,17 @@ export function ToolbarSegment({
       aria-pressed={active}
       aria-label={ariaLabel}
       className={cn(
-        "h-full rounded-md leading-none",
-        density === "compact" ? "px-2" : "px-2.5",
-        mode === "text" ? textSizeClassName : null,
-        className,
+        "h-6 rounded-md border-0 px-1.5 py-0 shadow-none",
+        active
+          ? "bg-zinc-900 text-white hover:bg-zinc-800"
+          : "bg-transparent text-zinc-900 hover:bg-zinc-100",
       )}
       onClick={onClick}
       variant={active ? "default" : "outline"}
     >
-      {renderedIcon}
-      {children}
+      <span className="flex items-center justify-center leading-none">
+        {renderedIcon}
+      </span>
     </Button>
   );
 }

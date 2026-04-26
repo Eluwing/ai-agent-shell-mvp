@@ -49,8 +49,8 @@ export function LanguageSwitcher() {
         onClick={() => setOpen((current) => !current)}
         variant="outline"
       >
-        {getLocaleIcon(locale)}
-        <span className="text-[12px] font-semibold">
+        {getLocaleIcon(locale, "size-3")}
+        <span className="text-[11px] font-semibold">
           {localeOptions[locale].label}
         </span>
         <ChevronDown className="size-2.5 opacity-70" />
@@ -83,7 +83,7 @@ export function LanguageSwitcher() {
                 aria-checked={selected}
                 type="button"
               >
-                {getLocaleIcon(nextLocale)}
+                {getLocaleIcon(nextLocale, "size-3")}
                 <span className="text-[10px] font-semibold">
                   {localeOptions[nextLocale].label}
                 </span>

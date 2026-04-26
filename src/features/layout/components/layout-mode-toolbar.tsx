@@ -1,20 +1,16 @@
 import { Monitor, PanelRight, PictureInPicture2 } from "lucide-react";
 import { useTranslation } from "@/shared/i18n/hooks/use-translation";
 import { useLayoutStore } from "@/features/layout/stores/layout-store";
-import { ToolbarGroup } from "./toolbar-group";
+import { TitleBarControlGroup } from "@/app/components/title-bar-control-group";
 import { ToolbarSegment } from "./toolbar-segment";
 
-type LayoutModeToolbarProps = {
-  className?: string;
-};
-
-export function LayoutModeToolbar({ className }: LayoutModeToolbarProps) {
+export function LayoutModeToolbar() {
   const setLayoutMode = useLayoutStore((state) => state.setLayoutMode);
   const layoutMode = useLayoutStore((state) => state.layoutMode);
   const { t } = useTranslation();
 
   return (
-    <ToolbarGroup className={className} density="compact">
+    <TitleBarControlGroup className="gap-0.5">
       <ToolbarSegment
         active={layoutMode === "native"}
         ariaLabel={t("layout.native")}
@@ -33,6 +29,6 @@ export function LayoutModeToolbar({ className }: LayoutModeToolbarProps) {
         onClick={() => setLayoutMode("split")}
         icon={<PanelRight />}
       />
-    </ToolbarGroup>
+    </TitleBarControlGroup>
   );
 }
