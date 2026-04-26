@@ -8,11 +8,15 @@ export const localeLabels: Record<Locale, string> = {
 
 export const translations: Record<Locale, Record<string, string>> = {
   ko: {
+    "app.title": "AI Agent Mock",
     "app.subtitle": "Electron + React + LangGraph 기본 구동 확인",
     "layout.native": "Native",
     "layout.pip": "PIP",
     "layout.split": "Split",
     "language.label": "언어",
+    "window.minimize": "창 최소화",
+    "window.maximize": "창 최대화",
+    "window.close": "창 닫기",
     "browser.placeholderTitle": "WebView 영역",
     "browser.placeholderSubtitle":
       "다음 단계에서 실제 SaaS WebContentsView를 붙입니다.",
@@ -28,11 +32,15 @@ export const translations: Record<Locale, Record<string, string>> = {
     "runtime.openai": "OpenAI SDK: installed",
   },
   ja: {
+    "app.title": "AI Agent Mock",
     "app.subtitle": "Electron + React + LangGraph の基本起動確認",
     "layout.native": "Native",
     "layout.pip": "PIP",
     "layout.split": "Split",
     "language.label": "言語",
+    "window.minimize": "ウィンドウを最小化",
+    "window.maximize": "ウィンドウを最大化",
+    "window.close": "ウィンドウを閉じる",
     "browser.placeholderTitle": "WebView 領域",
     "browser.placeholderSubtitle":
       "次のステップで実際の SaaS WebContentsView を接続します。",
@@ -48,11 +56,15 @@ export const translations: Record<Locale, Record<string, string>> = {
     "runtime.openai": "OpenAI SDK: installed",
   },
   en: {
+    "app.title": "AI Agent Mock",
     "app.subtitle": "Electron + React + LangGraph smoke test",
     "layout.native": "Native",
     "layout.pip": "PIP",
     "layout.split": "Split",
     "language.label": "Language",
+    "window.minimize": "Minimize window",
+    "window.maximize": "Maximize window",
+    "window.close": "Close window",
     "browser.placeholderTitle": "WebView Area",
     "browser.placeholderSubtitle":
       "The real SaaS WebContentsView will be attached in the next step.",

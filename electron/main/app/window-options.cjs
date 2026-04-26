@@ -9,6 +9,7 @@ function createMainWindowOptions() {
     minHeight: appConfig.defaultWindowSize.minHeight,
     title: "AI Agent Mock",
     backgroundColor: "#f7f7f5",
+    titleBarStyle: process.platform === "darwin" ? "hiddenInset" : undefined,
     webPreferences: {
       preload: path.join(__dirname, "../../preload/index.cjs"),
       contextIsolation: true,

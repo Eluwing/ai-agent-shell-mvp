@@ -16,6 +16,11 @@ export type ElectronApi = {
   runtime: {
     versions: () => Promise<RuntimeVersionsResponse>;
   };
+  window: {
+    minimize: () => Promise<void>;
+    toggleMaximize: () => Promise<{ maximized: boolean }>;
+    close: () => Promise<void>;
+  };
   workspace: {
     open: (input: OpenWorkspaceInput) => Promise<OpenWorkspaceResult>;
   };

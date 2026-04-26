@@ -7,6 +7,11 @@ function createElectronApi() {
 
   return {
     runtime,
+    window: {
+      minimize: () => ipcRenderer.invoke("window:minimize"),
+      toggleMaximize: () => ipcRenderer.invoke("window:toggle-maximize"),
+      close: () => ipcRenderer.invoke("window:close"),
+    },
     workspace: {
       open: (input) => ipcRenderer.invoke("workspace:open", input),
     },
