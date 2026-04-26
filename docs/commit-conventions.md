@@ -12,6 +12,8 @@ Use Conventional Commits:
 type(scope): short summary
 ```
 
+For changes that touch more than one file, update documentation, or need extra context, include a short body under the subject.
+
 Examples:
 
 ```txt
@@ -27,7 +29,8 @@ chore(build): update packaging config
 - Keep the subject short and specific.
 - Use present tense and imperative mood.
 - Prefer one logical change per commit.
-- Add a body only when the change needs extra context.
+- Prefer a body for multi-file changes, docs updates, or boundary changes.
+- Keep the body to 2-5 short bullet points.
 - Mention breaking changes explicitly with `!` or a body note.
 
 ## Allowed Types
@@ -64,6 +67,7 @@ Add a body if:
 - the reason for the change is not obvious from the subject
 - the change affects Electron, IPC, or other boundaries
 - you want to note follow-up work or migration details
+- you want the commit to be self-explanatory in `git log`
 
 Example:
 
@@ -76,6 +80,16 @@ feat(ui): refine macOS title bar and toolbar
 - split locale labels and icon resolution for future flag support
 ```
 
+Preferred shape for this repo:
+
+```txt
+type(scope): short summary
+
+- what changed
+- why it changed
+- any follow-up or boundary notes
+```
+
 ## Agent Checklist
 
 Before committing, the agent should confirm:
@@ -86,6 +100,7 @@ Before committing, the agent should confirm:
 - the body is added only when it helps future readers
 - the message reflects the actual files changed
 - the final commit message follows this document's format exactly
+- the subject is short and the body captures the important details
 
 ## Preferred Style For This Repo
 
