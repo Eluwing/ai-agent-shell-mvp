@@ -1,7 +1,9 @@
 import type { CSSProperties } from "react";
 import { LayoutModeToolbar } from "@/features/layout/components/layout-mode-toolbar";
 import { LanguageSwitcher } from "@/features/layout/components/language-switcher";
+import { ViewControls } from "@/features/layout/components/view-controls";
 import { useTranslation } from "@/shared/i18n/hooks/use-translation";
+import { TitleBarSection } from "./title-bar-section";
 
 const dragStyle = { WebkitAppRegion: "drag" } as CSSProperties;
 const noDragStyle = { WebkitAppRegion: "no-drag" } as CSSProperties;
@@ -24,8 +26,15 @@ export function AppTitleBar() {
         className="flex items-center gap-2 translate-y-px"
         style={noDragStyle}
       >
-        <LayoutModeToolbar />
-        <LanguageSwitcher />
+        <TitleBarSection withSeparator>
+          <ViewControls />
+        </TitleBarSection>
+        <TitleBarSection withSeparator>
+          <LayoutModeToolbar />
+        </TitleBarSection>
+        <TitleBarSection>
+          <LanguageSwitcher />
+        </TitleBarSection>
       </div>
     </header>
   );

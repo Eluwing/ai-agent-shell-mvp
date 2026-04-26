@@ -8,6 +8,10 @@ import { WorkspaceSidebar } from "@/features/workspace/components/workspace-side
 
 export function AppShell() {
   const locale = useLayoutStore((state) => state.locale);
+  const workspaceSidebarVisible = useLayoutStore(
+    (state) => state.workspaceSidebarVisible,
+  );
+  const inspectorVisible = useLayoutStore((state) => state.inspectorVisible);
 
   useEffect(() => {
     document.documentElement.lang = locale;
@@ -18,17 +22,31 @@ export function AppShell() {
       <div className="grid min-h-screen grid-rows-[48px_1fr]">
         <AppTitleBar />
 
-        <div className="grid min-h-0 grid-cols-[240px_1fr]">
-          <WorkspaceSidebar />
+        <div
+          className={
+            workspaceSidebarVisible
+              ? "grid min-h-0 grid-cols-[240px_1fr]"
+              : "grid min-h-0 grid-cols-1"
+          }
+        >
+          {workspaceSidebarVisible ? <WorkspaceSidebar /> : null}
 
           <section className="flex min-w-0 flex-col">
-            <div className="grid flex-1 grid-cols-[1fr_360px] gap-4 p-5">
+            <div
+              className={
+                inspectorVisible
+                  ? "grid flex-1 grid-cols-[1fr_360px] gap-4 p-5"
+                  : "grid flex-1 grid-cols-1 p-5"
+              }
+            >
               <BrowserWorkspaceFrame />
 
-              <div className="space-y-4">
-                <AgentControlPanel />
-                <RuntimeCard />
-              </div>
+              {inspectorVisible ? (
+                <div className="space-y-4">
+                  <AgentControlPanel />
+                  <RuntimeCard />
+                </div>
+              ) : null}
             </div>
           </section>
         </div>
