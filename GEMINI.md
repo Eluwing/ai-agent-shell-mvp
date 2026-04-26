@@ -7,6 +7,9 @@ Before changing architecture or directory structure, read:
 - `docs/react-directory-structure.md`
 - `docs/electron-architecture.md`
 - `docs/tech-stack-and-progress.md`
+- `docs/commit-conventions.md`
+
+Before creating or rewriting commits, follow `docs/commit-conventions.md` exactly.
 
 ## Required Structure
 
