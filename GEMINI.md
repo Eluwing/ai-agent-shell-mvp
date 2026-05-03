@@ -9,9 +9,11 @@ Before changing architecture or directory structure, read:
 - `docs/tech-stack-and-progress.md`
 - `docs/title-bar-guidelines.md`
 - `docs/ui-component-guidelines.md`
+- `docs/branch-conventions.md`
 - `docs/commit-conventions.md`
 
 Before creating or rewriting commits, follow `docs/commit-conventions.md` exactly.
+Before creating or renaming branches, follow `docs/branch-conventions.md` exactly.
 
 ## Required Structure
 
