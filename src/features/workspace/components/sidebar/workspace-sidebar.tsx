@@ -1,5 +1,5 @@
 import { Bot } from "lucide-react";
-import { WorkspaceSwitcher } from "@/features/workspace/components/workspace-switcher";
+import { WorkspaceSwitcher } from "./workspace-switcher";
 
 export function WorkspaceSidebar() {
   return (

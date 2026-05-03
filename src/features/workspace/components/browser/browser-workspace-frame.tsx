@@ -1,6 +1,7 @@
-import { useActiveWorkspace } from "@/features/workspace/hooks/use-active-workspace";
-import { WebviewPlaceholder } from "@/features/workspace/components/webview-placeholder";
 import { useTranslation } from "@/shared/i18n/hooks/use-translation";
+import { useActiveWorkspace } from "@/features/workspace/hooks/use-active-workspace";
+import { resolveWorkspaceUrl } from "@/features/workspace/lib/resolve-workspace-url";
+import { WebviewPlaceholder } from "./webview-placeholder";
 
 export function BrowserWorkspaceFrame() {
   const activeWorkspace = useActiveWorkspace();
@@ -16,6 +17,9 @@ export function BrowserWorkspaceFrame() {
           {t("browser.placeholderChrome", {
             workspace: activeWorkspace.name,
           })}
+        </span>
+        <span className="ml-auto rounded-full bg-zinc-100 px-2 py-0.5 text-[11px] text-zinc-500">
+          {resolveWorkspaceUrl(activeWorkspace)}
         </span>
       </div>
       <WebviewPlaceholder />

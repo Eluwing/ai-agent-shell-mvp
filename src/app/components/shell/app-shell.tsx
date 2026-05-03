@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { AppTitleBar } from "@/app/components/app-title-bar";
-import { AgentControlPanel } from "@/features/agent/ui/agent-control-panel";
+import { AppTitleBar } from "@/app/components/title-bar/app-title-bar";
+import { AgentControlPanel } from "@/features/agent/ui/panels/agent-control-panel";
 import { useLayoutStore } from "@/features/layout/stores/layout-store";
-import { RuntimeCard } from "@/features/runtime/components/runtime-card";
-import { BrowserWorkspaceFrame } from "@/features/workspace/components/browser-workspace-frame";
-import { WorkspaceSidebar } from "@/features/workspace/components/workspace-sidebar";
+import { RuntimeCard } from "@/features/runtime/components/cards/runtime-card";
+import { BrowserWorkspaceFrame } from "@/features/workspace/components/browser/browser-workspace-frame";
+import { WorkspaceSidebar } from "@/features/workspace/components/sidebar/workspace-sidebar";
 
 export function AppShell() {
   const locale = useLayoutStore((state) => state.locale);
