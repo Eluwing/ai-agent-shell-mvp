@@ -93,6 +93,41 @@ types/
 | `constants/` | 상수 |
 | `types/` | TypeScript 타입 |
 
+### 3-1. 큰 폴더는 scope 단위로 한 번 더 나눈다
+
+`components/`, `context/`, `hooks/`, `actions/` 같은 역할 폴더가 커지면, 기능이나 UI 범위 단위로 하위 폴더를 둔다.
+이 규칙은 `app/`, `features/`, `shared/` 전반에 적용한다. 폴더가 커지면 최상위 역할 폴더에 계속 쌓아두지 말고, 먼저 scope 하위 폴더를 만든다.
+기본 원칙은 "늦게 쪼개기"가 아니라 "빠르게 쪼개기"다. 앞으로 커질 가능성이 보이면 초기에 scope 폴더를 만들어 구조를 명확히 한다.
+
+예:
+
+```txt
+app/components/shell/app-shell.tsx
+app/components/title-bar/app-title-bar.tsx
+app/components/title-bar/title-bar-section.tsx
+app/context/title-bar/title-bar-layout-context.tsx
+
+features/workspace/components/browser/browser-workspace-frame.tsx
+features/workspace/components/tabs/workspace-tab-strip.tsx
+features/workspace/components/tabs/workspace-tab.tsx
+features/workspace/context/workspace-tabs-context.tsx
+features/workspace/hooks/use-active-workspace.ts
+```
+
+기준:
+
+- `app/` 아래의 UI는 shell, title bar, chrome 등 화면 범위 기준으로 나눈다.
+- `features/` 아래의 UI는 feature domain 안에서 sub-feature나 scope 기준으로 나눈다.
+- `shared/`는 여전히 도메인 지식이 없는 공통 코드만 둔다.
+
+### `providers/` and `context/` scopes
+
+- `providers/`는 여러 하위 영역을 감싸는 공급자용으로만 쓴다.
+- `context/`는 특정 UI 범위 안에서만 공유할 값이 있을 때 쓴다.
+- 전역 앱 설정처럼 여러 feature가 함께 써야 하는 값은 `app/providers/`에 둔다.
+- 타이틀바, 탭 스트립, 특정 feature 내부 레이아웃처럼 범위가 좁은 값은 해당 영역의 `context/` 아래에 둔다.
+- `shared/`에는 도메인이나 UI 범위를 아는 context를 두지 않는다.
+
 ### `services/`를 쓰지 않는 이유
 
 `services/`는 의미가 넓어 시간이 지나면 다음 코드가 한 폴더에 섞일 가능성이 높다.
@@ -178,9 +213,19 @@ src/
   app/
     App.tsx
     components/
-      app-shell.tsx
+      shell/
+        app-shell.tsx
+      title-bar/
+        app-title-bar.tsx
+        title-bar-section.tsx
+        title-bar-control-group.tsx
     providers/
       providers.tsx
+    context/
+      title-bar/
+        title-bar-layout-context.tsx
+    hooks/
+      use-element-width.ts
 
   features/
     agent/
@@ -273,10 +318,15 @@ src/
 
     workspace/
       components/
-        workspace-sidebar.tsx
-        workspace-switcher.tsx
-        browser-workspace-frame.tsx
-        webview-placeholder.tsx
+        tabs/
+          workspace-tab-strip.tsx
+          workspace-tab.tsx
+        browser/
+          browser-workspace-frame.tsx
+          webview-placeholder.tsx
+        sidebar/
+          workspace-sidebar.tsx
+          workspace-switcher.tsx
       hooks/
         use-active-workspace.ts
       stores/
@@ -294,18 +344,28 @@ src/
 
     layout/
       components/
-        layout-mode-toolbar.tsx
-        language-switcher.tsx
+        toggles/
+          view-controls.tsx
+          view-toggle-button.tsx
+        toolbar/
+          layout-mode-toolbar.tsx
+          toolbar-segment.tsx
+        switcher/
+          language-switcher.tsx
       stores/
         layout-store.ts
       constants/
         layout-modes.ts
+        locale-options.ts
+      lib/
+        get-locale-icon.tsx
       types/
         layout-types.ts
 
     runtime/
       components/
-        runtime-card.tsx
+        cards/
+          runtime-card.tsx
       hooks/
         use-runtime-versions.ts
       types/
@@ -354,11 +414,26 @@ shared/
 - app shell 배치
 - route 또는 top-level layout
 
+`app/providers/`에는 앱 전체를 감싸는 전역 provider를 둔다.
+`app/context/`에는 특정 앱 영역에서만 쓰는 로컬 context를 둔다.
+예를 들어 타이틀바 전용 레이아웃 정보는 `app/context/title-bar/` 아래에 둔다.
+
 ```txt
 app/
   App.tsx
-  components/app-shell.tsx
+  components/
+    shell/
+      app-shell.tsx
+    title-bar/
+      app-title-bar.tsx
+      title-bar-section.tsx
+      title-bar-control-group.tsx
   providers/providers.tsx
+  context/
+    title-bar/
+      title-bar-layout-context.tsx
+  hooks/
+    use-element-width.ts
 ```
 
 ### `features/agent/`
@@ -366,6 +441,92 @@ app/
 AI agent domain이다.
 
 agent는 가장 커질 가능성이 높으므로 처음부터 sub-feature로 나눈다.
+현재 구현은 더 강하게 scope 단위로 쪼개는 방향을 따른다. `ui/`, `preview/`, `runs/`, `tools/`, `approvals/`, `timeline/` 아래에서 다시 `cards/`, `panels/`, `controls/`, `dialogs/`, `summaries/`, `lists/`, `rows/`처럼 좁혀서 관리한다.
+
+실제 현재 구조 예:
+
+```txt
+features/agent/ui/
+  cards/
+    agent-status-card.tsx
+  panels/
+    agent-control-panel.tsx
+
+features/agent/preview/
+  components/
+    cards/
+      preview-result-card.tsx
+    controls/
+      preview-run-button.tsx
+  hooks/
+    use-agent-preview.ts
+  actions/
+    run-preview-agent.ts
+  lib/
+    preview-graph.ts
+
+features/agent/approvals/
+  components/
+    dialogs/
+      approval-dialog.tsx
+    summaries/
+      approval-summary.tsx
+  hooks/
+    use-approval-request.ts
+  stores/
+    approval-store.ts
+  actions/
+    approve-request.ts
+    reject-request.ts
+  lib/
+    approval-gate.ts
+    format-approval-risk.ts
+
+features/agent/tools/
+  components/
+    lists/
+      tool-call-list.tsx
+    rows/
+      tool-call-row.tsx
+  hooks/
+    use-tool-call.ts
+  actions/
+    execute-tool-call.ts
+  adapters/
+    electron-browser-tool-adapter.ts
+    openai-tool-adapter.ts
+  lib/
+    tool-registry.ts
+    validate-tool-input.ts
+
+features/agent/runs/
+  components/
+    list/
+      agent-run-list.tsx
+    detail/
+      agent-run-detail.tsx
+    status/
+      agent-run-status.tsx
+  hooks/
+    use-agent-runs.ts
+  actions/
+    start-agent-run.ts
+    stop-agent-run.ts
+  api/
+    create-agent-run.ts
+
+features/agent/timeline/
+  components/
+    list/
+      action-timeline.tsx
+    rows/
+      timeline-event-row.tsx
+  hooks/
+    use-agent-timeline.ts
+  lib/
+    group-timeline-events.ts
+    format-timeline-event.ts
+```
 
 #### `agent/core/`
 
@@ -458,24 +619,125 @@ SaaS workspace를 담당한다.
 - CRM
 - Admin
 
+현재 구현은 workspace도 scope 단위로 나눈다. `tabs/`, `browser/`, `sidebar/`처럼 화면 역할 기준으로 분리하고, 각 scope 아래에서 다시 세부 컴포넌트를 나눈다.
+
+실제 현재 구조 예:
+
+```txt
+features/workspace/
+  components/
+    tabs/
+      workspace-tab-strip.tsx
+      workspace-tab.tsx
+    browser/
+      browser-workspace-frame.tsx
+      webview-placeholder.tsx
+    sidebar/
+      workspace-sidebar.tsx
+      workspace-switcher.tsx
+  hooks/
+    use-active-workspace.ts
+  stores/
+    workspace-store.ts
+  actions/
+    open-workspace.ts
+  api/
+    create-workspace-view.ts
+  lib/
+    resolve-workspace-url.ts
+  constants/
+    default-workspaces.ts
+  types/
+    workspace-types.ts
+```
+
 workspace는 나중에 URL, session partition, auth state, WebContentsView id 등을 갖게 된다.
 
 ### `features/layout/`
 
 앱 shell의 layout 상태를 담당한다.
 
+`layout`은 빠르게 scope 하위 폴더로 나눈다. 현재도 컨트롤 성격에 따라 분리해서 둔다.
+
+권장 구조 예:
+
+```txt
+features/layout/
+  components/
+    toggles/
+      view-controls.tsx
+      view-toggle-button.tsx
+    toolbar/
+      layout-mode-toolbar.tsx
+      toolbar-segment.tsx
+    switcher/
+      language-switcher.tsx
+  stores/
+    layout-store.ts
+  constants/
+    layout-modes.ts
+    locale-options.ts
+  lib/
+    get-locale-icon.tsx
+  types/
+    layout-types.ts
+```
+
+현재 코드 예:
+
+```txt
+features/layout/
+  components/
+    toggles/
+      view-controls.tsx
+      view-toggle-button.tsx
+    toolbar/
+      layout-mode-toolbar.tsx
+      toolbar-segment.tsx
+    switcher/
+      language-switcher.tsx
+  constants/
+    layout-modes.ts
+    locale-options.ts
+  lib/
+    get-locale-icon.tsx
+  stores/
+    layout-store.ts
+  types/
+    layout-types.ts
+```
+
 예:
 
 - native mode
 - PIP mode
 - split screen mode
+- sidebar visibility
+- inspector visibility
 - locale
+
+layout은 단순 UI 컴포넌트가 아니라 앱 shell의 보기 모드, 패널 상태, 언어 토글 같은 **전역 레이아웃 정책**을 함께 담는다.
 
 ### `features/runtime/`
 
 Electron/Chrome/Node 등 runtime 정보를 담당한다.
 
 현재 `window.agentShell.versions()` 호출은 나중에 이 feature의 hook으로 이동한다.
+
+현재 코드 예:
+
+```txt
+features/runtime/
+  components/
+    cards/
+      runtime-card.tsx
+  hooks/
+    use-runtime-versions.ts
+  types/
+    runtime-types.ts
+```
+
+runtime은 아직 작지만, runtime 정보 카드나 버전 조회 hook이 더 늘어나면 `cards/`와 `hooks/` 기준으로 더 나눌 수 있다.
 
 ### `shared/`
 
@@ -546,7 +808,7 @@ components/
 예:
 
 ```txt
-features/workspace/components/workspace-sidebar.tsx
+features/workspace/components/sidebar/workspace-sidebar.tsx
 features/agent/timeline/components/action-timeline.tsx
 ```
 
@@ -674,7 +936,12 @@ features/workspace/types/workspace-types.ts
 ```txt
 src/App.tsx
 -> src/app/App.tsx
--> src/app/components/app-shell.tsx
+-> src/app/components/shell/app-shell.tsx
+-> src/app/components/title-bar/app-title-bar.tsx
+-> src/app/components/title-bar/title-bar-section.tsx
+-> src/app/components/title-bar/title-bar-control-group.tsx
+-> src/app/context/title-bar/title-bar-layout-context.tsx
+-> src/app/hooks/use-element-width.ts
 
 src/components/ui/button.tsx
 -> src/shared/components/ui/button.tsx

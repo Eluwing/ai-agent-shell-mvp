@@ -2,9 +2,13 @@ import { Button } from "@/shared/components/ui/button";
 import { useWorkspaceStore } from "@/features/workspace/stores/workspace-store";
 
 export function WorkspaceSwitcher() {
-  const activeWorkspaceId = useWorkspaceStore((state) => state.activeWorkspaceId);
+  const activeWorkspaceId = useWorkspaceStore(
+    (state) => state.activeWorkspaceId,
+  );
   const workspaces = useWorkspaceStore((state) => state.workspaces);
-  const setActiveWorkspace = useWorkspaceStore((state) => state.setActiveWorkspace);
+  const setActiveWorkspace = useWorkspaceStore(
+    (state) => state.setActiveWorkspace,
+  );
 
   return (
     <nav className="mt-8 space-y-2">

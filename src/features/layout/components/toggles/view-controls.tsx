@@ -1,7 +1,12 @@
-import { PanelLeftClose, PanelLeftOpen, PanelRightClose, PanelRightOpen } from "lucide-react";
+import {
+  PanelLeftClose,
+  PanelLeftOpen,
+  PanelRightClose,
+  PanelRightOpen,
+} from "lucide-react";
 import { useTranslation } from "@/shared/i18n/hooks/use-translation";
 import { useLayoutStore } from "@/features/layout/stores/layout-store";
-import { TitleBarControlGroup } from "@/app/components/title-bar-control-group";
+import { TitleBarControlGroup } from "@/app/components/title-bar/title-bar-control-group";
 import { ViewToggleButton } from "./view-toggle-button";
 
 export function ViewControls() {
