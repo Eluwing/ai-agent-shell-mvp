@@ -22,11 +22,12 @@ export function WorkspaceTabStrip() {
     const padding = 8;
     const gap = 4;
     const trailingCushion = 10;
+    const interTabGap = Math.max(0, (workspaces.length - 1) * gap);
     const availableForTabs =
-      tabAreaWidth - padding - trailingCushion - workspaces.length * gap;
-    const computedWidth = Math.floor(availableForTabs / workspaces.length);
+      tabAreaWidth - padding - trailingCushion - interTabGap;
+    const width = availableForTabs / workspaces.length;
 
-    return Math.max(64, Math.min(132, computedWidth || 0));
+    return Math.max(48, Math.min(132, width || 0));
   }, [tabAreaWidth, workspaces.length]);
 
   return (
