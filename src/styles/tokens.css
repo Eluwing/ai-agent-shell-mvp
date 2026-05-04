@@ -11,6 +11,9 @@
   --color-tab-active-fg: var(--tab-active-foreground);
   --color-tab-inactive-fg: var(--tab-inactive-foreground);
   --color-tab-hover: var(--tab-hover-background);
+  --color-tab-close: var(--tab-close-foreground);
+  --color-tab-close-hover: var(--tab-close-hover-background);
+  --color-tab-close-hover-fg: var(--tab-close-hover-foreground);
   --color-button-primary: var(--button-primary-bg);
   --color-button-primary-fg: var(--button-primary-fg);
   --color-button-primary-hover: var(--button-primary-hover-bg);

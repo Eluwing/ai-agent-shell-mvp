@@ -13,6 +13,10 @@
   --tab-active-foreground: #ffffff;
   --tab-inactive-foreground: #d4d4d8;
   --tab-hover-background: #3c4043;
+  --tab-close-foreground: #e8eaed;
+  --tab-close-hover-background: rgba(255, 255, 255, 0.2);
+  --tab-close-hover-foreground: #ffffff;
+  --tab-active-top-shadow: rgba(255, 255, 255, 0.04);
   --button-primary-bg: #8ab4f8;
   --button-primary-fg: #202124;
   --button-primary-hover-bg: #aecbfa;
@@ -48,6 +52,10 @@
   --tab-active-foreground: #ffffff;
   --tab-inactive-foreground: #65717d;
   --tab-hover-background: #e2ebf4;
+  --tab-close-foreground: #ffffff;
+  --tab-close-hover-background: rgba(255, 255, 255, 0.22);
+  --tab-close-hover-foreground: #ffffff;
+  --tab-active-top-shadow: rgba(255, 255, 255, 0.28);
   --button-primary-bg: #35a6dc;
   --button-primary-fg: #ffffff;
   --button-primary-hover-bg: #59bfee;

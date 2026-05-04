@@ -34,7 +34,7 @@ export function WorkspaceTab({
       className={cn(
         "group relative flex shrink-0 items-stretch overflow-hidden rounded-t-xl border border-b-0 shadow-none transition-colors",
         active
-          ? "z-10 -mb-px border-tab-active-border bg-tab-active shadow-[0_-1px_0_rgba(255,255,255,0.04)]"
+          ? "z-10 -mb-px border-tab-active-border bg-tab-active shadow-[0_-1px_0_var(--tab-active-top-shadow)]"
           : "border-transparent bg-tab-inactive hover:bg-tab-hover",
       )}
       style={{ width: tabWidth }}
@@ -71,10 +71,10 @@ export function WorkspaceTab({
         <button
           type="button"
           aria-label={`Close ${workspace.name}`}
-          className="group absolute right-0 inline-flex h-8 w-8 items-center justify-center text-white/80 transition-colors"
+          className="group absolute right-0 inline-flex h-8 w-8 items-center justify-center text-tab-close transition-colors"
           onClick={onClose}
         >
-          <span className="inline-flex size-4 items-center justify-center rounded-full transition-colors group-hover:bg-white/20 group-hover:text-white">
+          <span className="inline-flex size-4 items-center justify-center rounded-full transition-colors group-hover:bg-tab-close-hover group-hover:text-tab-close-hover-fg">
             <X className="size-3" />
           </span>
         </button>
