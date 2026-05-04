@@ -25,17 +25,15 @@ export function WorkspaceTabStrip() {
 
     const padding = 8;
     const gap = 4;
-    const addButtonWidth = 32;
-    const availableForTabs =
-      tabAreaWidth - padding - addButtonWidth - workspaces.length * gap;
+    const availableForTabs = tabAreaWidth - padding - workspaces.length * gap;
     const computedWidth = Math.floor(availableForTabs / workspaces.length);
 
-    return Math.max(0, Math.min(132, computedWidth || 0));
+    return Math.max(64, Math.min(132, computedWidth || 0));
   }, [tabAreaWidth, workspaces.length]);
 
   return (
-    <div className="flex min-w-0 items-end overflow-hidden">
-      <div className="flex w-full min-w-0 items-end gap-1 overflow-hidden rounded-t-2xl bg-zinc-900 px-1 pt-1">
+    <div className="flex min-w-0 items-end gap-1 overflow-hidden bg-zinc-900 rounded-t-2xl px-1 pt-1">
+      <div className="flex min-w-0 flex-1 items-end gap-1 overflow-hidden">
         {workspaces.map((workspace) => (
           <WorkspaceTab
             key={workspace.id}
@@ -46,16 +44,15 @@ export function WorkspaceTabStrip() {
             onClose={() => closeWorkspace(workspace.id)}
           />
         ))}
-
-        <button
-          type="button"
-          aria-label={t("workspace.addTab")}
-          className="mb-1 inline-flex size-8 items-center justify-center rounded-full text-zinc-300 transition-colors hover:bg-white/10 hover:text-white"
-          onClick={addWorkspace}
-        >
-          <Plus className="size-4" />
-        </button>
       </div>
+      <button
+        type="button"
+        aria-label={t("workspace.addTab")}
+        className="mb-1 inline-flex size-8 shrink-0 items-center justify-center rounded-full text-zinc-300 transition-colors hover:bg-white/10 hover:text-white"
+        onClick={addWorkspace}
+      >
+        <Plus className="size-4" />
+      </button>
     </div>
   );
 }
