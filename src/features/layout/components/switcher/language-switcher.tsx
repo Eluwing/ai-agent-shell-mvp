@@ -43,7 +43,7 @@ export function LanguageSwitcher() {
         aria-expanded={open}
         aria-haspopup="menu"
         className={cn(
-          "h-8 rounded-lg border-chrome-border bg-button-secondary px-2.5 font-medium leading-none text-chrome-fg shadow-none hover:bg-button-secondary-hover",
+          "h-8 rounded-lg border-shell-border bg-button-secondary px-2.5 font-medium leading-none text-shell-fg shadow-none hover:bg-button-secondary-hover",
           open && "bg-button-secondary-hover",
         )}
         onClick={() => setOpen((current) => !current)}
@@ -59,7 +59,7 @@ export function LanguageSwitcher() {
 
       {open ? (
         <div
-          className="absolute right-0 z-50 min-w-20 overflow-hidden rounded-lg border border-chrome-border bg-card p-0.5 shadow-md shadow-black/10"
+          className="absolute right-0 z-50 min-w-20 overflow-hidden rounded-lg border border-shell-border bg-card p-0.5 shadow-md shadow-black/10"
           role="menu"
           aria-label={t("language.label")}
         >
@@ -73,7 +73,7 @@ export function LanguageSwitcher() {
                   "flex h-8 w-full items-center gap-1.5 rounded-md px-2 text-left transition-colors",
                   selected
                     ? "bg-button-primary text-button-primary-fg"
-                    : "text-chrome-fg hover:bg-button-secondary-hover hover:text-chrome-fg",
+                    : "text-shell-fg hover:bg-button-secondary-hover hover:text-shell-fg",
                 )}
                 onClick={() => {
                   setLocale(nextLocale);

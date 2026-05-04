@@ -29,7 +29,7 @@ export function ToolbarSegment({
         "h-6 rounded-md border-0 px-1.5 py-0 shadow-none",
         active
           ? "bg-button-primary text-button-primary-fg hover:bg-button-primary-hover"
-          : "bg-transparent text-chrome-fg hover:bg-button-secondary-hover",
+          : "bg-transparent text-shell-fg hover:bg-button-secondary-hover",
       )}
       onClick={onClick}
       variant={active ? "default" : "outline"}

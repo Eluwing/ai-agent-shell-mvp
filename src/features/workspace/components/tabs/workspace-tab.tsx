@@ -74,7 +74,7 @@ export function WorkspaceTab({
           className="group absolute right-0 inline-flex h-8 w-8 items-center justify-center text-tab-inactive-fg transition-colors"
           onClick={onClose}
         >
-          <span className="inline-flex size-4 items-center justify-center rounded-full transition-colors group-hover:bg-button-secondary-hover group-hover:text-chrome-fg">
+          <span className="inline-flex size-4 items-center justify-center rounded-full transition-colors group-hover:bg-button-secondary-hover group-hover:text-shell-fg">
             <X className="size-3" />
           </span>
         </button>
