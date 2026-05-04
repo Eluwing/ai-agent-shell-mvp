@@ -34,21 +34,21 @@ export function WorkspaceTab({
       className={cn(
         "group relative flex shrink-0 items-stretch overflow-hidden rounded-t-xl border border-b-0 shadow-none transition-colors",
         active
-          ? "z-10 -mb-px border-[color:var(--tab-active-border)] bg-[color:var(--tab-active-background)] shadow-[0_-1px_0_rgba(255,255,255,0.04)]"
-          : "border-transparent bg-[color:var(--tab-inactive-background)] hover:bg-[color:var(--tab-hover-background)]",
+          ? "z-10 -mb-px border-tab-active-border bg-tab-active shadow-[0_-1px_0_rgba(255,255,255,0.04)]"
+          : "border-transparent bg-tab-inactive hover:bg-tab-hover",
       )}
       style={{ width: tabWidth }}
     >
       <Button
         aria-pressed={active}
         aria-label={workspace.name}
-        className={cn(
-          "h-8 min-w-0 flex-1 justify-start gap-2 rounded-none border-0 bg-transparent px-3 py-0 shadow-none hover:bg-transparent",
-          closeButtonWidth,
-          active
-            ? "font-medium text-[color:var(--tab-active-foreground)]"
-            : "text-[color:var(--tab-inactive-foreground)]",
-        )}
+          className={cn(
+            "h-8 min-w-0 flex-1 justify-start gap-2 rounded-none border-0 bg-transparent px-3 py-0 shadow-none hover:bg-transparent",
+            closeButtonWidth,
+            active
+            ? "font-medium text-tab-active-fg"
+            : "text-tab-inactive-fg",
+          )}
         onClick={onSelect}
         variant={active ? "default" : "outline"}
       >
@@ -71,10 +71,10 @@ export function WorkspaceTab({
         <button
           type="button"
           aria-label={`Close ${workspace.name}`}
-          className="group absolute right-0 inline-flex h-8 w-8 items-center justify-center text-[color:var(--tab-inactive-foreground)] transition-colors"
+          className="group absolute right-0 inline-flex h-8 w-8 items-center justify-center text-tab-inactive-fg transition-colors"
           onClick={onClose}
         >
-          <span className="inline-flex size-4 items-center justify-center rounded-full transition-colors group-hover:bg-[color:var(--button-secondary-hover-bg)] group-hover:text-[color:var(--chrome-foreground)]">
+          <span className="inline-flex size-4 items-center justify-center rounded-full transition-colors group-hover:bg-button-secondary-hover group-hover:text-chrome-fg">
             <X className="size-3" />
           </span>
         </button>

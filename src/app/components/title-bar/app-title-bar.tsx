@@ -24,12 +24,12 @@ export function AppTitleBar() {
 
   return (
     <TitleBarLayoutProvider tabAreaWidth={tabAreaWidth}>
-      <header className="grid h-9 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 border-b border-[color:var(--chrome-border)] bg-[color:var(--chrome-background)] px-3 pr-2 pl-[86px] text-[color:var(--chrome-foreground)] backdrop-blur">
+      <header className="grid h-9 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 border-b border-chrome-border bg-chrome-bg px-3 pr-2 pl-[86px] text-chrome-fg backdrop-blur">
         <div
           className="flex shrink-0 items-center translate-y-px"
           style={dragStyle}
         >
-          <p className="truncate text-[13px] font-medium leading-none text-[color:var(--chrome-foreground)]">
+          <p className="truncate text-[13px] font-medium leading-none text-chrome-fg">
             {t("app.title")}
           </p>
         </div>
@@ -47,7 +47,7 @@ export function AppTitleBar() {
           <button
             type="button"
             aria-label={t("workspace.addTab")}
-            className="mb-1 inline-flex size-8 shrink-0 items-center justify-center rounded-full text-[color:var(--chrome-foreground)]/70 transition-colors hover:bg-[color:var(--button-outline-hover-bg)] hover:text-[color:var(--chrome-foreground)]"
+            className="mb-1 inline-flex size-8 shrink-0 items-center justify-center rounded-full text-chrome-fg/70 transition-colors hover:bg-button-outline-hover hover:text-chrome-fg"
             onClick={addWorkspace}
           >
             <Plus className="size-4" />

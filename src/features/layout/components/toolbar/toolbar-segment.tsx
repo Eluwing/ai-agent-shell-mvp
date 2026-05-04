@@ -28,8 +28,8 @@ export function ToolbarSegment({
       className={cn(
         "h-6 rounded-md border-0 px-1.5 py-0 shadow-none",
         active
-          ? "bg-[color:var(--button-primary-bg)] text-[color:var(--button-primary-fg)] hover:bg-[color:var(--button-primary-hover-bg)]"
-          : "bg-transparent text-[color:var(--chrome-foreground)] hover:bg-[color:var(--button-secondary-hover-bg)]",
+          ? "bg-button-primary text-button-primary-fg hover:bg-button-primary-hover"
+          : "bg-transparent text-chrome-fg hover:bg-button-secondary-hover",
       )}
       onClick={onClick}
       variant={active ? "default" : "outline"}

@@ -14,7 +14,7 @@ export function TitleBarSection({
       {children}
       {withSeparator ? (
         <div
-          className="h-5 w-px bg-[color:var(--chrome-border)]/30"
+          className="h-5 w-px bg-chrome-border/30"
           aria-hidden="true"
         />
       ) : null}

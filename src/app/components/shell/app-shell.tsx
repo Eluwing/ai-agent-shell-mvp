@@ -18,7 +18,7 @@ export function AppShell() {
   }, [locale]);
 
   return (
-    <main className="min-h-screen bg-[color:var(--app-background)] text-[color:var(--app-foreground)]">
+    <main className="min-h-screen bg-app-bg text-app-fg">
       <div className="grid min-h-screen grid-rows-[48px_1fr]">
         <AppTitleBar />
 

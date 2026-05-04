@@ -9,11 +9,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-[color:var(--button-primary-bg)] text-[color:var(--button-primary-fg)] hover:bg-[color:var(--button-primary-hover-bg)]",
+          "bg-button-primary text-button-primary-fg hover:bg-button-primary-hover",
         secondary:
-          "bg-[color:var(--button-secondary-bg)] text-[color:var(--button-secondary-fg)] hover:bg-[color:var(--button-secondary-hover-bg)]",
+          "bg-button-secondary text-button-secondary-fg hover:bg-button-secondary-hover",
         outline:
-          "border border-[color:var(--button-outline-border)] bg-[color:var(--button-outline-bg)] text-[color:var(--button-outline-fg)] hover:bg-[color:var(--button-outline-hover-bg)]",
+          "border border-button-outline-border bg-button-outline text-button-outline-fg hover:bg-button-outline-hover",
       },
     },
     defaultVariants: {
