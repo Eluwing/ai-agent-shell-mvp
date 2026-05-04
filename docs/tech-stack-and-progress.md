@@ -201,15 +201,20 @@ vite.config.ts
 electron/main.cjs
 electron/preload.cjs
 src/main.tsx
-src/App.tsx
+src/app/App.tsx
+src/app/components/shell/app-shell.tsx
+src/app/components/title-bar/app-title-bar.tsx
 src/styles.css
 src/vite-env.d.ts
-src/lib/utils.ts
-src/components/ui/button.tsx
-src/components/ui/card.tsx
-src/store/agent-store.ts
+src/shared/lib/cn.ts
+src/shared/components/ui/button.tsx
+src/shared/components/ui/card.tsx
+src/features/agent/core/stores/agent-store.ts
+src/features/agent/preview/lib/preview-graph.ts
+src/shared/i18n/constants/translations.ts
+src/shared/i18n/hooks/use-translation.ts
+src/shared/ipc/contracts/workspace-contract.ts
 src/db/schema.ts
-src/agent/graph.ts
 docs/tech-stack-and-progress.md
 ```
 
@@ -323,4 +328,3 @@ src/
 8. approval gate 설계
 9. PIP window 구현
 10. split screen layout 구현
-
