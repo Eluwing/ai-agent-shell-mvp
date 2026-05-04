@@ -9,7 +9,7 @@ export function PreviewResultCard({ result }: PreviewResultCardProps) {
   const { t } = useTranslation();
 
   return (
-    <div className="rounded-md border border-zinc-200 p-3 text-sm">
+    <div className="rounded-md border border-card-border bg-card p-3 text-sm text-card-fg">
       {result
         ? t("agent.previewResult", {
             workspace: result.workspaceName,

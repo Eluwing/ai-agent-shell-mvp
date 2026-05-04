@@ -11,6 +11,7 @@ Before making structural or architectural changes, read these documents:
 - `docs/ui-component-guidelines.md`
 - `docs/branch-conventions.md`
 - `docs/commit-conventions.md`
+- `docs/pr-conventions.md`
 
 Before creating new files, check the relevant directory and component guidance first, then follow the existing scope and folder rules.
 

@@ -1,12 +1,14 @@
 import type { CSSProperties } from "react";
+import { Plus } from "lucide-react";
 import { TitleBarLayoutProvider } from "@/app/context/title-bar/title-bar-layout-context";
 import { useElementWidth } from "@/app/hooks/use-element-width";
 import { LayoutModeToolbar } from "@/features/layout/components/toolbar/layout-mode-toolbar";
 import { LanguageSwitcher } from "@/features/layout/components/switcher/language-switcher";
+import { ThemeToggleButton } from "@/features/layout/components/switcher/theme-toggle-button";
 import { ViewControls } from "@/features/layout/components/toggles/view-controls";
 import { WorkspaceTabStrip } from "@/features/workspace/components/tabs/workspace-tab-strip";
 import { useWorkspaceStore } from "@/features/workspace/stores/workspace-store";
-import { Plus } from "lucide-react";
+import { Button } from "@/shared/components/ui/button";
 import { useTranslation } from "@/shared/i18n/hooks/use-translation";
 import { TitleBarSection } from "./title-bar-section";
 
@@ -20,12 +22,12 @@ export function AppTitleBar() {
 
   return (
     <TitleBarLayoutProvider tabAreaWidth={tabAreaWidth}>
-      <header className="grid h-9 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 border-b border-zinc-200 bg-white/90 px-3 pr-2 pl-[86px] backdrop-blur">
+      <header className="grid h-9 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 border-b border-shell-border bg-shell-bg px-3 pr-2 pl-[86px] text-shell-fg backdrop-blur">
         <div
           className="flex shrink-0 items-center translate-y-px"
           style={dragStyle}
         >
-          <p className="truncate text-[13px] font-medium leading-none text-zinc-900">
+          <p className="truncate text-[13px] font-medium leading-none text-shell-fg">
             {t("app.title")}
           </p>
         </div>
@@ -43,7 +45,7 @@ export function AppTitleBar() {
           <button
             type="button"
             aria-label={t("workspace.addTab")}
-            className="mb-1 inline-flex size-8 shrink-0 items-center justify-center rounded-full text-zinc-300 transition-colors hover:bg-white/10 hover:text-white"
+            className="mb-1 inline-flex size-8 shrink-0 items-center justify-center rounded-full text-shell-fg/70 transition-colors hover:bg-button-outline-hover hover:text-shell-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-button-primary/30 focus-visible:ring-offset-0"
             onClick={addWorkspace}
           >
             <Plus className="size-4" />
@@ -59,6 +61,9 @@ export function AppTitleBar() {
           </TitleBarSection>
           <TitleBarSection withSeparator>
             <LayoutModeToolbar />
+          </TitleBarSection>
+          <TitleBarSection withSeparator>
+            <ThemeToggleButton />
           </TitleBarSection>
           <TitleBarSection>
             <LanguageSwitcher />

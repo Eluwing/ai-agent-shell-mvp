@@ -13,7 +13,10 @@ export function TitleBarSection({
     <div className="flex items-center gap-2">
       {children}
       {withSeparator ? (
-        <div className="h-5 w-px bg-zinc-200/70" aria-hidden="true" />
+        <div
+          className="h-5 w-px bg-shell-border/30"
+          aria-hidden="true"
+        />
       ) : null}
     </div>
   );

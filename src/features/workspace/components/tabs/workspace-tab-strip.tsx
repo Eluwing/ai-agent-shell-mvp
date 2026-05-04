@@ -31,7 +31,7 @@ export function WorkspaceTabStrip() {
   }, [tabAreaWidth, workspaces.length]);
 
   return (
-    <div className="flex min-w-0 items-end gap-1 overflow-hidden rounded-t-2xl bg-zinc-900 px-1 pr-2 pt-1">
+    <div className="flex min-w-0 items-end gap-1 overflow-hidden rounded-t-2xl bg-tab-strip px-1 pr-2 pt-1">
       <div className="flex min-w-0 flex-1 items-end gap-1 overflow-hidden">
         {workspaces.map((workspace) => (
           <WorkspaceTab

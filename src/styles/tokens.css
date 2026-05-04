@@ -1,0 +1,30 @@
+@theme {
+  --color-app-bg: var(--app-background);
+  --color-app-fg: var(--app-foreground);
+  --color-shell-bg: var(--shell-background);
+  --color-shell-fg: var(--shell-foreground);
+  --color-shell-border: var(--shell-border);
+  --color-tab-strip: var(--tab-strip-background);
+  --color-tab-active: var(--tab-active-background);
+  --color-tab-inactive: var(--tab-inactive-background);
+  --color-tab-active-border: var(--tab-active-border);
+  --color-tab-active-fg: var(--tab-active-foreground);
+  --color-tab-inactive-fg: var(--tab-inactive-foreground);
+  --color-tab-hover: var(--tab-hover-background);
+  --color-tab-close: var(--tab-close-foreground);
+  --color-tab-close-hover: var(--tab-close-hover-background);
+  --color-tab-close-hover-fg: var(--tab-close-hover-foreground);
+  --color-button-primary: var(--button-primary-bg);
+  --color-button-primary-fg: var(--button-primary-fg);
+  --color-button-primary-hover: var(--button-primary-hover-bg);
+  --color-button-secondary: var(--button-secondary-bg);
+  --color-button-secondary-fg: var(--button-secondary-fg);
+  --color-button-secondary-hover: var(--button-secondary-hover-bg);
+  --color-button-outline: var(--button-outline-bg);
+  --color-button-outline-fg: var(--button-outline-fg);
+  --color-button-outline-border: var(--button-outline-border);
+  --color-button-outline-hover: var(--button-outline-hover-bg);
+  --color-card: var(--card-background);
+  --color-card-fg: var(--card-foreground);
+  --color-card-border: var(--card-border);
+}

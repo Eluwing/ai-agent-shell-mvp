@@ -11,7 +11,7 @@ export function RuntimeCard() {
       <CardHeader>
         <CardTitle>{t("runtime.title")}</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-2 text-sm text-zinc-600">
+      <CardContent className="space-y-2 text-sm text-card-fg/80">
         <p>Electron: {versions?.electron ?? "-"}</p>
         <p>Chrome: {versions?.chrome ?? "-"}</p>
         <p>Node: {versions?.node ?? "-"}</p>
