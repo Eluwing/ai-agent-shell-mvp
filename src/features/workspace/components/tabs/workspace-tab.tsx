@@ -34,8 +34,8 @@ export function WorkspaceTab({
       className={cn(
         "group relative flex shrink-0 items-stretch overflow-hidden rounded-t-xl border border-b-0 shadow-none transition-colors",
         active
-          ? "z-10 -mb-px border-zinc-600 bg-zinc-900 shadow-[0_-1px_0_rgba(255,255,255,0.04)]"
-          : "border-transparent bg-zinc-950/90 hover:bg-zinc-800",
+          ? "z-10 -mb-px border-[color:var(--tab-active-border)] bg-[color:var(--tab-active-background)] shadow-[0_-1px_0_rgba(255,255,255,0.04)]"
+          : "border-transparent bg-[color:var(--tab-inactive-background)] hover:bg-[color:var(--tab-hover-background)]",
       )}
       style={{ width: tabWidth }}
     >
@@ -45,7 +45,9 @@ export function WorkspaceTab({
         className={cn(
           "h-8 min-w-0 flex-1 justify-start gap-2 rounded-none border-0 bg-transparent px-3 py-0 shadow-none hover:bg-transparent",
           closeButtonWidth,
-          active ? "font-medium text-white" : "text-zinc-300",
+          active
+            ? "font-medium text-[color:var(--tab-active-foreground)]"
+            : "text-[color:var(--tab-inactive-foreground)]",
         )}
         onClick={onSelect}
         variant={active ? "default" : "outline"}

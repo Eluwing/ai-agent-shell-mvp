@@ -6,8 +6,10 @@ export function AgentStatusCard() {
   const { t } = useTranslation();
 
   return (
-    <div className="rounded-md bg-zinc-50 p-3 text-sm">
-      <p className="text-xs text-zinc-500">{t("agent.currentMode")}</p>
+    <div className="rounded-md bg-[color:var(--card-background)] p-3 text-sm text-[color:var(--card-foreground)]">
+      <p className="text-xs text-[color:var(--card-foreground)]/70">
+        {t("agent.currentMode")}
+      </p>
       <p className="mt-1 font-medium">{layoutMode}</p>
     </div>
   );

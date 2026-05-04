@@ -8,9 +8,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-zinc-900 text-white hover:bg-zinc-800",
-        secondary: "bg-zinc-100 text-zinc-950 hover:bg-zinc-200",
-        outline: "border border-zinc-200 bg-white hover:bg-zinc-50",
+        default:
+          "bg-[color:var(--button-primary-bg)] text-[color:var(--button-primary-fg)] hover:bg-[color:var(--button-primary-hover-bg)]",
+        secondary:
+          "bg-[color:var(--button-secondary-bg)] text-[color:var(--button-secondary-fg)] hover:bg-[color:var(--button-secondary-hover-bg)]",
+        outline:
+          "border border-[color:var(--button-outline-border)] bg-[color:var(--button-outline-bg)] text-[color:var(--button-outline-fg)] hover:bg-[color:var(--button-outline-hover-bg)]",
       },
     },
     defaultVariants: {
