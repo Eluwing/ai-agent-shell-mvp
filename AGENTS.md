@@ -12,6 +12,8 @@ Before making structural or architectural changes, read these documents:
 - `docs/branch-conventions.md`
 - `docs/commit-conventions.md`
 
+Before creating new files, check the relevant directory and component guidance first, then follow the existing scope and folder rules.
+
 Before creating or rewriting commits, follow `docs/commit-conventions.md` exactly.
 Before creating or renaming branches, follow `docs/branch-conventions.md` exactly.
 

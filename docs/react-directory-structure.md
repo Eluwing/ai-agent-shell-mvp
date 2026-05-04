@@ -128,6 +128,101 @@ features/workspace/hooks/use-active-workspace.ts
 - 타이틀바, 탭 스트립, 특정 feature 내부 레이아웃처럼 범위가 좁은 값은 해당 영역의 `context/` 아래에 둔다.
 - `shared/`에는 도메인이나 UI 범위를 아는 context를 두지 않는다.
 
+### 3-2. import boundary를 지킨다
+
+레이어 간 import는 아래 방향을 기본으로 한다.
+
+```txt
+app -> features, shared
+features -> shared, 자기 feature 내부
+shared -> 아무 feature도 import하지 않음
+```
+
+규칙:
+
+- `app`은 feature의 public surface만 조립한다.
+- `features`는 다른 feature의 내부 파일을 직접 import하지 않는다.
+- feature 간 공유가 필요하면 `shared/`의 contract, helper, UI primitive를 우선 사용한다.
+- 꼭 필요하면 의존하는 feature의 매우 얇은 public API만 노출하고, 깊은 내부 경로 import는 피한다.
+- `shared/`는 어떤 feature도 알지 못하는 순수 공통 코드만 둔다.
+
+### 3-3. 파일 네이밍 규칙
+
+AI와 사람이 같은 패턴으로 파일을 만들 수 있게, 이름은 다음 규칙을 따른다.
+
+```txt
+component  -> kebab-case.tsx
+hook       -> use-xxx.ts
+store      -> xxx-store.ts
+action     -> verb-noun.ts
+type       -> xxx-types.ts
+constant   -> xxx.ts 또는 xxx-options.ts
+context    -> xxx-context.tsx
+provider   -> xxx-provider.tsx
+```
+
+예:
+
+```txt
+workspace-tab-strip.tsx
+use-runtime-versions.ts
+layout-store.ts
+run-preview-agent.ts
+workspace-types.ts
+locale-options.ts
+title-bar-layout-context.tsx
+title-bar-layout-provider.tsx
+```
+
+### 3-4. barrel export 정책
+
+기본적으로 `index.ts` barrel export는 만들지 않는다.
+
+이유:
+
+- import 경로가 짧아지는 대신 순환 의존성이 숨기 쉽다.
+- AI가 자동 생성할 때 불필요한 public surface가 늘어난다.
+- 파일 위치와 의존 방향을 명시적으로 보기 어렵다.
+
+예외:
+
+- feature의 명확한 public API를 정말 제한적으로 노출할 때만 허용한다.
+- `components/` 하위 폴더마다 `index.ts`를 자동 생성하지 않는다.
+
+### 3-5. state ownership
+
+상태는 다음 기준으로 둔다.
+
+```txt
+feature 전역 상태        -> stores/
+단일 컴포넌트 UI 상태    -> component local state
+runtime / IPC 응답 캐시  -> hooks/ 또는 api/ 근처
+DB/API 응답 변환        -> mappers/
+계산 가능한 값          -> store에 저장하지 말고 lib 또는 selector로 계산
+```
+
+규칙:
+
+- Zustand에는 장기 보관이 필요한 상태만 둔다.
+- 파생 가능한 값은 store에 중복 저장하지 않는다.
+- UI 토글처럼 범위가 매우 좁으면 component local state를 우선 고려한다.
+
+### 3-6. test placement
+
+테스트는 scope를 따라 둔다.
+
+```txt
+작은 순수 함수 테스트      -> 같은 폴더에 colocate 가능
+테스트가 많아진 feature     -> feature/tests/
+IPC contract 테스트         -> shared/ipc 또는 Electron 쪽 테스트
+```
+
+규칙:
+
+- 순수 함수는 가까운 곳에서 테스트한다.
+- feature가 커지면 `tests/`로 올린다.
+- Electron IPC contract는 renderer feature 테스트와 섞지 않는다.
+
 ### `services/`를 쓰지 않는 이유
 
 `services/`는 의미가 넓어 시간이 지나면 다음 코드가 한 폴더에 섞일 가능성이 높다.
@@ -193,6 +288,7 @@ features/agent/tools/
 shared/components/ui/button.tsx
 shared/components/ui/card.tsx
 shared/i18n/hooks/use-translation.ts
+shared/ipc/contracts/workspace-contract.ts
 shared/lib/cn.ts
 ```
 
@@ -384,6 +480,15 @@ shared/
         translations.ts
       types/
         i18n-types.ts
+
+  ipc/
+    channels.ts
+    contracts/
+      agent-contract.ts
+      browser-contract.ts
+      runtime-contract.ts
+      workspace-contract.ts
+    electron-api.ts
 
   hooks/
     use-disclosure.ts
@@ -750,6 +855,30 @@ runtime은 아직 작지만, runtime 정보 카드나 버전 조회 hook이 더 
 - generic hooks
 - generic utils
 
+### `shared/ipc/`
+
+renderer가 preload API와 통신하기 위한 타입, 채널, contract만 둔다.
+
+예:
+
+```txt
+shared/ipc/
+  channels.ts
+  contracts/
+    agent-contract.ts
+    browser-contract.ts
+    runtime-contract.ts
+    workspace-contract.ts
+  electron-api.ts
+```
+
+규칙:
+
+- raw `ipcRenderer`를 React feature로 노출하지 않는다.
+- `Electron` 객체를 React feature로 직접 넘기지 않는다.
+- `webContents`도 renderer feature에 직접 노출하지 않는다.
+- feature는 `shared/ipc`의 contract와 typed API만 통해 통신한다.
+
 ### `db/`
 
 Drizzle schema와 DB 관련 타입을 둔다.
@@ -929,9 +1058,9 @@ features/agent/tools/types/tool-types.ts
 features/workspace/types/workspace-types.ts
 ```
 
-## 현재 코드에서 이동 예정
+## Migration History
 
-현재 파일을 이 구조로 옮기면 다음과 같다.
+아래는 현재 구조로 옮기며 정리한 대표 이동 이력이다.
 
 ```txt
 src/App.tsx
@@ -970,19 +1099,23 @@ src/db/schema.ts
 -> 유지
 ```
 
-## 도입 순서
+## Current Structure
 
-실제 리팩토링은 다음 순서로 진행한다.
+현재 코드베이스는 위 구조를 대부분 반영했다.
+
+## Future Expansion
+
+앞으로 새 feature를 추가할 때는 다음 순서로 확장한다.
 
 ```txt
 1. shared/components, shared/i18n, shared/lib 이동
-2. layout feature 생성
-3. workspace feature 생성
-4. runtime feature 생성
-5. agent/core 및 agent/preview 생성
+2. layout feature에 새 scope 추가
+3. workspace feature에 새 scope 추가
+4. runtime feature에 새 scope 추가
+5. agent/core 및 agent 하위 scope 추가
 6. app-shell에서 feature UI 조립
 7. build 확인
-8. 브라우저에서 KO/JA/EN 전환 확인
+8. 브라우저에서 동작 확인
 9. commit
 10. push
 ```

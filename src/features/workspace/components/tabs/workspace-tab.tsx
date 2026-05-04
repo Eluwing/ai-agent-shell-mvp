@@ -24,17 +24,28 @@ export function WorkspaceTab({
   onSelect,
   onClose,
 }: WorkspaceTabProps) {
+  const closeButtonWidth = active ? "pr-8" : "pr-3";
+  const titleMaxWidth = active
+    ? Math.max(0, tabWidth - 64)
+    : Math.max(0, tabWidth - 40);
+
   return (
-    <div className="group relative shrink-0">
+    <div
+      className={cn(
+        "group relative flex shrink-0 items-stretch overflow-hidden rounded-t-xl border border-b-0 shadow-none transition-colors",
+        active
+          ? "z-10 -mb-px border-zinc-600 bg-zinc-900 shadow-[0_-1px_0_rgba(255,255,255,0.04)]"
+          : "border-transparent bg-zinc-950/90 hover:bg-zinc-800",
+      )}
+      style={{ width: tabWidth }}
+    >
       <Button
         aria-pressed={active}
         aria-label={workspace.name}
-        style={{ width: tabWidth }}
         className={cn(
-          "h-8 min-w-0 flex-none rounded-t-xl rounded-b-none border border-b-0 px-3 py-0 shadow-none",
-          active
-            ? "border-zinc-700 bg-zinc-900 text-white hover:bg-zinc-800"
-            : "border-transparent bg-zinc-950/90 text-zinc-300 hover:bg-zinc-800",
+          "h-8 min-w-0 flex-1 justify-start gap-2 rounded-none border-0 bg-transparent px-3 py-0 shadow-none hover:bg-transparent",
+          closeButtonWidth,
+          active ? "font-medium text-white" : "text-zinc-300",
         )}
         onClick={onSelect}
         variant={active ? "default" : "outline"}
@@ -46,19 +57,26 @@ export function WorkspaceTab({
           )}
           aria-hidden="true"
         />
-        <span className="min-w-0 flex-1 truncate text-[12px] font-medium leading-none">
+        <span
+          className="min-w-0 flex-1 overflow-hidden whitespace-nowrap text-ellipsis text-[12px] font-medium leading-none"
+          style={{ maxWidth: titleMaxWidth }}
+        >
           {workspace.name}
         </span>
       </Button>
 
-      <button
-        type="button"
-        aria-label={`Close ${workspace.name}`}
-        className="absolute right-1 top-1/2 inline-flex size-5 -translate-y-1/2 items-center justify-center rounded-full text-zinc-400 opacity-0 transition-opacity hover:bg-white/10 hover:text-white group-hover:opacity-100"
-        onClick={onClose}
-      >
-        <X className="size-3" />
-      </button>
+      {active ? (
+        <button
+          type="button"
+          aria-label={`Close ${workspace.name}`}
+          className="group absolute right-0 inline-flex h-8 w-8 items-center justify-center text-zinc-400 transition-colors"
+          onClick={onClose}
+        >
+          <span className="inline-flex size-4 items-center justify-center rounded-full transition-colors group-hover:bg-white/10 group-hover:text-white">
+            <X className="size-3" />
+          </span>
+        </button>
+      ) : null}
     </div>
   );
 }

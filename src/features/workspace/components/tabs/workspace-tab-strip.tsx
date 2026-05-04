@@ -1,7 +1,5 @@
 import { useMemo } from "react";
-import { Plus } from "lucide-react";
 import { useTitleBarLayout } from "@/app/context/title-bar/title-bar-layout-context";
-import { useTranslation } from "@/shared/i18n/hooks/use-translation";
 import { useWorkspaceStore } from "@/features/workspace/stores/workspace-store";
 import { WorkspaceTab } from "./workspace-tab";
 
@@ -14,9 +12,7 @@ export function WorkspaceTabStrip() {
   const setActiveWorkspace = useWorkspaceStore(
     (state) => state.setActiveWorkspace,
   );
-  const addWorkspace = useWorkspaceStore((state) => state.addWorkspace);
   const closeWorkspace = useWorkspaceStore((state) => state.closeWorkspace);
-  const { t } = useTranslation();
 
   const tabWidth = useMemo(() => {
     if (workspaces.length === 0) {
@@ -25,17 +21,18 @@ export function WorkspaceTabStrip() {
 
     const padding = 8;
     const gap = 4;
-    const addButtonWidth = 32;
+    const trailingCushion = 10;
+    const interTabGap = Math.max(0, (workspaces.length - 1) * gap);
     const availableForTabs =
-      tabAreaWidth - padding - addButtonWidth - workspaces.length * gap;
-    const computedWidth = Math.floor(availableForTabs / workspaces.length);
+      tabAreaWidth - padding - trailingCushion - interTabGap;
+    const width = availableForTabs / workspaces.length;
 
-    return Math.max(0, Math.min(132, computedWidth || 0));
+    return Math.max(48, Math.min(132, width || 0));
   }, [tabAreaWidth, workspaces.length]);
 
   return (
-    <div className="flex min-w-0 items-end overflow-hidden">
-      <div className="flex w-full min-w-0 items-end gap-1 overflow-hidden rounded-t-2xl bg-zinc-900 px-1 pt-1">
+    <div className="flex min-w-0 items-end gap-1 overflow-hidden rounded-t-2xl bg-zinc-900 px-1 pr-2 pt-1">
+      <div className="flex min-w-0 flex-1 items-end gap-1 overflow-hidden">
         {workspaces.map((workspace) => (
           <WorkspaceTab
             key={workspace.id}
@@ -46,15 +43,6 @@ export function WorkspaceTabStrip() {
             onClose={() => closeWorkspace(workspace.id)}
           />
         ))}
-
-        <button
-          type="button"
-          aria-label={t("workspace.addTab")}
-          className="mb-1 inline-flex size-8 items-center justify-center rounded-full text-zinc-300 transition-colors hover:bg-white/10 hover:text-white"
-          onClick={addWorkspace}
-        >
-          <Plus className="size-4" />
-        </button>
       </div>
     </div>
   );
