@@ -37,32 +37,32 @@
 
 :root[data-theme="light"] {
   color-scheme: light;
-  --app-background: #f7f7f5;
-  --app-foreground: #1f2328;
-  --chrome-background: rgba(255, 255, 255, 0.9);
-  --chrome-foreground: #1f2328;
-  --chrome-border: #e4e4e7;
-  --tab-strip-background: #111113;
-  --tab-active-background: #18181b;
-  --tab-inactive-background: rgba(9, 9, 11, 0.9);
-  --tab-active-border: #52525b;
+  --app-background: #f8f8f8;
+  --app-foreground: #666666;
+  --chrome-background: rgba(255, 255, 255, 0.96);
+  --chrome-foreground: #666666;
+  --chrome-border: rgba(0, 0, 0, 0.1);
+  --tab-strip-background: #f8f8f8;
+  --tab-active-background: #ffffff;
+  --tab-inactive-background: #f2f2f2;
+  --tab-active-border: rgba(0, 0, 0, 0.1);
   --tab-inactive-border: transparent;
-  --tab-active-foreground: #ffffff;
-  --tab-inactive-foreground: #d4d4d8;
-  --tab-hover-background: #27272a;
-  --button-primary-bg: #18181b;
+  --tab-active-foreground: #666666;
+  --tab-inactive-foreground: #777777;
+  --tab-hover-background: #eeeeee;
+  --button-primary-bg: #35a6dc;
   --button-primary-fg: #ffffff;
-  --button-primary-hover-bg: #27272a;
-  --button-secondary-bg: #f4f4f5;
-  --button-secondary-fg: #09090b;
-  --button-secondary-hover-bg: #e4e4e7;
+  --button-primary-hover-bg: #59bfee;
+  --button-secondary-bg: #ffffff;
+  --button-secondary-fg: #666666;
+  --button-secondary-hover-bg: #f8f8f8;
   --button-outline-bg: #ffffff;
-  --button-outline-fg: #09090b;
-  --button-outline-border: #e4e4e7;
+  --button-outline-fg: #666666;
+  --button-outline-border: rgba(0, 0, 0, 0.1);
   --button-outline-hover-bg: #fafafa;
   --card-background: #ffffff;
-  --card-foreground: #1f2328;
-  --card-border: #e4e4e7;
+  --card-foreground: #666666;
+  --card-border: rgba(0, 0, 0, 0.1);
 }
 
 body {

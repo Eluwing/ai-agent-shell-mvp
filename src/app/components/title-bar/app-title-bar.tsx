@@ -47,7 +47,7 @@ export function AppTitleBar() {
           <button
             type="button"
             aria-label={t("workspace.addTab")}
-            className="mb-1 inline-flex size-8 shrink-0 items-center justify-center rounded-full text-zinc-300 transition-colors hover:bg-white/10 hover:text-white"
+            className="mb-1 inline-flex size-8 shrink-0 items-center justify-center rounded-full text-[color:var(--chrome-foreground)]/70 transition-colors hover:bg-[color:var(--button-outline-hover-bg)] hover:text-[color:var(--chrome-foreground)]"
             onClick={addWorkspace}
           >
             <Plus className="size-4" />

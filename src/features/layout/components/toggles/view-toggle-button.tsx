@@ -24,8 +24,8 @@ export function ViewToggleButton({
       className={cn(
         "h-6 rounded-md border-0 px-1.5 shadow-none",
         active
-          ? "bg-zinc-900 text-white hover:bg-zinc-800"
-          : "bg-transparent text-zinc-900 hover:bg-zinc-100",
+          ? "bg-[color:var(--button-primary-bg)] text-[color:var(--button-primary-fg)] hover:bg-[color:var(--button-primary-hover-bg)]"
+          : "bg-transparent text-[color:var(--chrome-foreground)] hover:bg-[color:var(--button-secondary-hover-bg)]",
       )}
       onClick={onClick}
       variant="outline"

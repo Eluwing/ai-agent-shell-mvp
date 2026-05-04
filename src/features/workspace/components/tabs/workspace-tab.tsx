@@ -71,10 +71,10 @@ export function WorkspaceTab({
         <button
           type="button"
           aria-label={`Close ${workspace.name}`}
-          className="group absolute right-0 inline-flex h-8 w-8 items-center justify-center text-zinc-400 transition-colors"
+          className="group absolute right-0 inline-flex h-8 w-8 items-center justify-center text-[color:var(--tab-inactive-foreground)] transition-colors"
           onClick={onClose}
         >
-          <span className="inline-flex size-4 items-center justify-center rounded-full transition-colors group-hover:bg-white/10 group-hover:text-white">
+          <span className="inline-flex size-4 items-center justify-center rounded-full transition-colors group-hover:bg-[color:var(--button-secondary-hover-bg)] group-hover:text-[color:var(--chrome-foreground)]">
             <X className="size-3" />
           </span>
         </button>
