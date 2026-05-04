@@ -69,28 +69,28 @@
   --app-foreground: #5b6672;
   --shell-background: rgba(255, 255, 255, 0.98);
   --shell-foreground: #5b6672;
-  --shell-border: rgba(53, 166, 220, 0.16);
+  --shell-border: rgba(53, 166, 220, 0.18);
   --tab-strip-background: #f0f5fa;
-  --tab-active-background: #ffffff;
-  --tab-inactive-background: #dce9f4;
-  --tab-active-border: rgba(53, 166, 220, 0.28);
+  --tab-active-background: #35a6dc;
+  --tab-inactive-background: #d4e2ee;
+  --tab-active-border: #35a6dc;
   --tab-inactive-border: transparent;
-  --tab-active-foreground: #56616d;
-  --tab-inactive-foreground: #6b7683;
-  --tab-hover-background: #d0dfec;
+  --tab-active-foreground: #ffffff;
+  --tab-inactive-foreground: #65717d;
+  --tab-hover-background: #e2ebf4;
   --button-primary-bg: #35a6dc;
   --button-primary-fg: #ffffff;
   --button-primary-hover-bg: #59bfee;
   --button-secondary-bg: #f8fbfe;
   --button-secondary-fg: #5b6672;
-  --button-secondary-hover-bg: #e8f1f8;
+  --button-secondary-hover-bg: #e3edf5;
   --button-outline-bg: #ffffff;
   --button-outline-fg: #5b6672;
-  --button-outline-border: rgba(53, 166, 220, 0.16);
+  --button-outline-border: rgba(53, 166, 220, 0.18);
   --button-outline-hover-bg: #f7fbfe;
   --card-background: #ffffff;
   --card-foreground: #5b6672;
-  --card-border: rgba(53, 166, 220, 0.16);
+  --card-border: rgba(53, 166, 220, 0.18);
 }
 
 body {
