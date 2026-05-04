@@ -1,11 +1,10 @@
 import { create } from "zustand";
+import { THEME_STORAGE_KEY } from "@/features/layout/constants/theme-storage";
 import type { Locale } from "@/shared/i18n/types/i18n-types";
 import type {
   LayoutMode,
   ThemeMode,
 } from "@/features/layout/types/layout-types";
-
-const THEME_STORAGE_KEY = "ai-agent-mock-theme-mode";
 
 function getInitialThemeMode(): ThemeMode {
   if (typeof window === "undefined") {

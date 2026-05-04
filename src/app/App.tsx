@@ -1,6 +1,7 @@
 import { useLayoutEffect } from "react";
 import { AppShell } from "@/app/components/shell/app-shell";
 import { Providers } from "@/app/providers/providers";
+import { THEME_STORAGE_KEY } from "@/features/layout/constants/theme-storage";
 import { useLayoutStore } from "@/features/layout/stores/layout-store";
 
 export function App() {
@@ -14,7 +15,7 @@ export function App() {
     root.style.colorScheme = themeMode;
 
     try {
-      window.localStorage.setItem("ai-agent-mock-theme-mode", themeMode);
+      window.localStorage.setItem(THEME_STORAGE_KEY, themeMode);
     } catch {
       // Ignore storage failures and keep the current theme in memory.
     }
