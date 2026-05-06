@@ -4,7 +4,7 @@ export function WebviewPlaceholder() {
   const { t } = useTranslation();
 
   return (
-    <div className="grid h-[calc(100vh-8.75rem)] place-items-center bg-app-bg">
+    <div className="grid h-full min-h-0 place-items-center bg-app-bg">
       <div className="text-center">
         <p className="text-2xl font-semibold">
           {t("browser.placeholderTitle")}

@@ -9,6 +9,7 @@ import type {
 import type {
   OpenWorkspaceInput,
   OpenWorkspaceResult,
+  SetWorkspaceViewBoundsInput,
 } from "./contracts/workspace-contract";
 import type { RuntimeVersionsResponse } from "./contracts/runtime-contract";
 
@@ -23,6 +24,7 @@ export type ElectronApi = {
   };
   workspace: {
     open: (input: OpenWorkspaceInput) => Promise<OpenWorkspaceResult>;
+    setViewBounds: (input: SetWorkspaceViewBoundsInput) => Promise<void>;
   };
   browser: {
     capturePage: (

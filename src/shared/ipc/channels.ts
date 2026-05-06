@@ -1,6 +1,7 @@
 export const IPC_CHANNELS = {
   runtimeVersions: "runtime:versions",
   workspaceOpen: "workspace:open",
+  workspaceSetViewBounds: "workspace:set-view-bounds",
   browserCapturePage: "browser:capture-page",
   agentStartRun: "agent:start-run",
   windowMinimize: "window:minimize",
