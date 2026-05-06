@@ -11,18 +11,48 @@ function createWorkspaceViewManager({ mainWindow, logger }) {
   const sessionManager = createWorkspaceSessionManager();
   const views = new Map();
   const boundsByWorkspaceId = new Map();
+  const navigationStateByWorkspaceId = new Map();
   let activeWorkspaceId = null;
 
   function normalizeUrl(url) {
     return url === "about:blank" ? "https://www.google.com" : url;
   }
 
+  function readNavigationState(view) {
+    return {
+      currentUrl: normalizeUrl(view.webContents.getURL() || "about:blank"),
+      canGoBack: view.webContents.canGoBack(),
+      canGoForward: view.webContents.canGoForward(),
+    };
+  }
+
+  function emitNavigationState(workspaceId, view) {
+    const state = readNavigationState(view);
+
+    navigationStateByWorkspaceId.set(workspaceId, state);
+    mainWindow.webContents.send("workspace:navigation-state-changed", {
+      workspaceId,
+      ...state,
+    });
+  }
+
   function createView(workspaceId) {
-    return new WebContentsView({
+    const view = new WebContentsView({
       webPreferences: {
         partition: sessionManager.partitionForWorkspace(workspaceId),
       },
     });
+
+    const syncNavigationState = () => {
+      emitNavigationState(workspaceId, view);
+    };
+
+    view.webContents.on("did-navigate", syncNavigationState);
+    view.webContents.on("did-navigate-in-page", syncNavigationState);
+    view.webContents.on("did-finish-load", syncNavigationState);
+    view.webContents.on("page-title-updated", syncNavigationState);
+
+    return view;
   }
 
   function ensureView(workspaceId) {
@@ -61,12 +91,23 @@ function createWorkspaceViewManager({ mainWindow, logger }) {
     return view;
   }
 
+  function refreshNavigationState(workspaceId) {
+    const view = views.get(workspaceId);
+
+    if (!view) {
+      return;
+    }
+
+    emitNavigationState(workspaceId, view);
+  }
+
   return {
     async openWorkspace(input) {
       logger.info("open workspace", input.workspaceId);
 
       const view = attachView(input.workspaceId);
       view.webContents.loadURL(normalizeUrl(input.url));
+      emitNavigationState(input.workspaceId, view);
 
       return {
         workspaceId: input.workspaceId,
@@ -86,6 +127,65 @@ function createWorkspaceViewManager({ mainWindow, logger }) {
       return {
         workspaceId: input.workspaceId,
         updated: true,
+      };
+    },
+    navigateWorkspaceBack(input) {
+      const view = views.get(input.workspaceId);
+
+      if (view?.webContents?.canGoBack()) {
+        view.webContents.goBack();
+      }
+
+      refreshNavigationState(input.workspaceId);
+
+      return {
+        workspaceId: input.workspaceId,
+        navigated: true,
+      };
+    },
+    navigateWorkspaceForward(input) {
+      const view = views.get(input.workspaceId);
+
+      if (view?.webContents?.canGoForward()) {
+        view.webContents.goForward();
+      }
+
+      refreshNavigationState(input.workspaceId);
+
+      return {
+        workspaceId: input.workspaceId,
+        navigated: true,
+      };
+    },
+    reloadWorkspace(input) {
+      const view = views.get(input.workspaceId);
+
+      if (view?.webContents) {
+        view.webContents.reload();
+      }
+
+      refreshNavigationState(input.workspaceId);
+
+      return {
+        workspaceId: input.workspaceId,
+        reloaded: true,
+      };
+    },
+    getWorkspaceNavigationState(input) {
+      const view = views.get(input.workspaceId);
+      const state =
+        navigationStateByWorkspaceId.get(input.workspaceId) ??
+        (view
+          ? readNavigationState(view)
+          : {
+              currentUrl: "about:blank",
+              canGoBack: false,
+              canGoForward: false,
+            });
+
+      return {
+        workspaceId: input.workspaceId,
+        ...state,
       };
     },
   };

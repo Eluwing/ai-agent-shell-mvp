@@ -2,6 +2,7 @@ import type {
   BrowserCapturePageInput,
   BrowserCapturePageResult,
 } from "./contracts/browser-contract";
+import type { Workspace } from "@/features/workspace/types/workspace-types";
 import type {
   StartAgentRunInput,
   StartAgentRunResult,
@@ -9,6 +10,10 @@ import type {
 import type {
   OpenWorkspaceInput,
   OpenWorkspaceResult,
+  NavigateWorkspaceBackInput,
+  NavigateWorkspaceForwardInput,
+  ReloadWorkspaceInput,
+  WorkspaceNavigationState,
   SetWorkspaceViewBoundsInput,
 } from "./contracts/workspace-contract";
 import type { RuntimeVersionsResponse } from "./contracts/runtime-contract";
@@ -25,6 +30,17 @@ export type ElectronApi = {
   workspace: {
     open: (input: OpenWorkspaceInput) => Promise<OpenWorkspaceResult>;
     setViewBounds: (input: SetWorkspaceViewBoundsInput) => Promise<void>;
+    navigateBack: (input: NavigateWorkspaceBackInput) => Promise<void>;
+    navigateForward: (
+      input: NavigateWorkspaceForwardInput,
+    ) => Promise<void>;
+    reload: (input: ReloadWorkspaceInput) => Promise<void>;
+    getNavigationState: (
+      input: { workspaceId: Workspace["id"] },
+    ) => Promise<WorkspaceNavigationState>;
+    onNavigationStateChanged: (
+      callback: (input: WorkspaceNavigationState) => void,
+    ) => () => void;
   };
   browser: {
     capturePage: (

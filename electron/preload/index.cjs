@@ -16,6 +16,24 @@ function createElectronApi() {
       open: (input) => ipcRenderer.invoke("workspace:open", input),
       setViewBounds: (input) =>
         ipcRenderer.invoke("workspace:set-view-bounds", input),
+      navigateBack: (input) =>
+        ipcRenderer.invoke("workspace:navigate-back", input),
+      navigateForward: (input) =>
+        ipcRenderer.invoke("workspace:navigate-forward", input),
+      reload: (input) => ipcRenderer.invoke("workspace:reload", input),
+      getNavigationState: (input) =>
+        ipcRenderer.invoke("workspace:navigation-state", input),
+      onNavigationStateChanged: (callback) => {
+        const listener = (_event, input) => callback(input);
+        ipcRenderer.on("workspace:navigation-state-changed", listener);
+
+        return () => {
+          ipcRenderer.removeListener(
+            "workspace:navigation-state-changed",
+            listener,
+          );
+        };
+      },
     },
     browser: {
       capturePage: (input) => ipcRenderer.invoke("browser:capture-page", input),

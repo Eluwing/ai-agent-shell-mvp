@@ -19,7 +19,7 @@ export function AppShell() {
 
   return (
     <main className="min-h-screen bg-app-bg text-app-fg">
-      <div className="grid min-h-screen grid-rows-[48px_1fr]">
+      <div className="grid min-h-screen grid-rows-[max-content_1fr]">
         <AppTitleBar />
 
         <div
@@ -35,8 +35,8 @@ export function AppShell() {
             <div
               className={
                 inspectorVisible
-                  ? "grid flex-1 grid-cols-[1fr_360px] gap-4 p-5"
-                  : "grid flex-1 grid-cols-1 p-5"
+                  ? "grid flex-1 grid-cols-[1fr_360px] gap-4"
+                  : "grid flex-1 grid-cols-1"
               }
             >
               <BrowserWorkspaceFrame />
