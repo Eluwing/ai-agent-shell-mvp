@@ -9,6 +9,7 @@ Before making structural or architectural changes, read these documents:
 - `docs/tech-stack-and-progress.md`
 - `docs/title-bar-guidelines.md`
 - `docs/ui-component-guidelines.md`
+- `docs/style-conventions.md`
 - `docs/branch-conventions.md`
 - `docs/commit-conventions.md`
 - `docs/pr-conventions.md`
