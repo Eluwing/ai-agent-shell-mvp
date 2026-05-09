@@ -6,21 +6,40 @@ When an agent is asked to create or rewrite a commit, it should follow this docu
 
 ## Default Format
 
-Use Conventional Commits:
+Use Conventional Commits with a required body:
 
 ```txt
 type(scope): short summary
+
+- what changed
+- why it changed
+- any follow-up or boundary notes
 ```
 
-For changes that touch more than one file, update documentation, or need extra context, include a short body under the subject.
+For every commit, include a short body under the subject.
 
 Examples:
 
 ```txt
 feat(ui): add custom title bar
+
+- introduce a renderer-controlled header for the app shell
+- keep the existing macOS traffic lights behavior
+- prepare the title bar for future control composition
+
 fix(electron): restore window controls on macOS
+
+- fix the native window button placement in the hidden title bar mode
+- keep renderer layout offsets aligned with the traffic light area
+
 refactor(layout): split toolbar group components
+
+- separate the toolbar into smaller title bar sections
+- make the layout easier to read and extend
+
 chore(build): update packaging config
+
+- adjust the packaging config for the current build pipeline
 ```
 
 ## Recommended Rules
@@ -29,7 +48,7 @@ chore(build): update packaging config
 - Keep the subject short and specific.
 - Use present tense and imperative mood.
 - Prefer one logical change per commit.
-- Prefer a body for multi-file changes, docs updates, or boundary changes.
+- Always include a body, even for small changes.
 - Keep the body to 2-5 short bullet points.
 - Mention breaking changes explicitly with `!` or a body note.
 
@@ -59,15 +78,13 @@ Use small scopes that make the area of change obvious:
 - `i18n`
 - `build`
 
-## When To Add A Body
+## Body Required
 
-Add a body if:
+Add a body for every commit. The body should:
 
-- the commit touches multiple related files
-- the reason for the change is not obvious from the subject
-- the change affects Electron, IPC, or other boundaries
-- you want to note follow-up work or migration details
-- you want the commit to be self-explanatory in `git log`
+- explain what changed
+- explain why it changed
+- mention any follow-up work or boundary notes when relevant
 
 Example:
 
@@ -97,7 +114,8 @@ Before committing, the agent should confirm:
 - the commit contains only the intended change
 - the message uses `type(scope): subject`
 - the subject is specific and not vague
-- the body is added only when it helps future readers
+- the body is present for every commit
+- the body captures the important details
 - the message reflects the actual files changed
 - the final commit message follows this document's format exactly
 - the subject is short and the body captures the important details

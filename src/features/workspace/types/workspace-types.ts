@@ -1,4 +1,6 @@
-export type WorkspaceKind = "cms" | "crm" | "admin";
+import { WORKSPACE_KINDS } from "@/features/workspace/constants/workspace-kinds";
+
+export type WorkspaceKind = (typeof WORKSPACE_KINDS)[number];
 
 export type Workspace = {
   id: string;
