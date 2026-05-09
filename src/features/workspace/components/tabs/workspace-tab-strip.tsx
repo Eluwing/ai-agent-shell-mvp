@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useTitleBarLayout } from "@/app/context/title-bar/title-bar-layout-context";
+import { useTitleBarLayout } from "@/features/layout/components/title-bar/title-bar-layout-context";
 import {
   WORKSPACE_TAB_EMPTY_WIDTH,
   WORKSPACE_TAB_GAP,

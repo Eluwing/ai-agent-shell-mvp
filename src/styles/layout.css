@@ -2,6 +2,8 @@
   --titlebar-leading-space: 86px;
   --workspace-sidebar-width: 240px;
   --workspace-inspector-width: 360px;
+  --browser-split-panel-width: minmax(420px, 520px);
+  --pip-agent-panel-width: 360px;
   --app-titlebar-height: 36px;
   --browser-toolbar-height: 44px;
   --layout-gutter: 20px;
@@ -34,6 +36,34 @@
     padding-block: var(--layout-gutter);
   }
 
+  .top-layout-gutter {
+    top: var(--layout-gutter);
+  }
+
+  .top-pip-agent-panel {
+    top: calc(var(--browser-toolbar-height) + var(--layout-gutter));
+  }
+
+  .right-layout-gutter {
+    right: var(--layout-gutter);
+  }
+
+  .w-pip-agent-panel {
+    width: var(--pip-agent-panel-width);
+  }
+
+  .mr-pip-agent-panel-space {
+    margin-right: calc(
+      var(--pip-agent-panel-width) + var(--layout-gutter) + var(--layout-gutter)
+    );
+  }
+
+  .max-w-pip-agent-panel {
+    max-width: calc(
+      100% - var(--layout-gutter) - var(--layout-gutter)
+    );
+  }
+
   .grid-cols-workspace-sidebar {
     grid-template-columns: var(--workspace-sidebar-width) 1fr;
   }
@@ -44,5 +74,9 @@
 
   .grid-cols-workspace-inspector {
     grid-template-columns: 1fr var(--workspace-inspector-width);
+  }
+
+  .grid-cols-browser-split {
+    grid-template-columns: minmax(0, 1fr) var(--browser-split-panel-width);
   }
 }

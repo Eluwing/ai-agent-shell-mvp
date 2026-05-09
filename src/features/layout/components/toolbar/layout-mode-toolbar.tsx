@@ -1,7 +1,7 @@
 import { Monitor, PanelRight, PictureInPicture2 } from "lucide-react";
 import { useTranslation } from "@/shared/i18n/hooks/use-translation";
 import { useLayoutStore } from "@/features/layout/stores/layout-store";
-import { TitleBarControlGroup } from "@/app/components/title-bar/title-bar-control-group";
+import { TitleBarControlGroup } from "@/features/layout/components/title-bar/title-bar-control-group";
 import { ToolbarSegment } from "./toolbar-segment";
 
 export function LayoutModeToolbar() {
