@@ -1,5 +1,13 @@
 import { useMemo } from "react";
 import { useTitleBarLayout } from "@/app/context/title-bar/title-bar-layout-context";
+import {
+  WORKSPACE_TAB_EMPTY_WIDTH,
+  WORKSPACE_TAB_GAP,
+  WORKSPACE_TAB_INNER_PADDING,
+  WORKSPACE_TAB_MAX_WIDTH,
+  WORKSPACE_TAB_MIN_WIDTH,
+  WORKSPACE_TAB_TRAILING_CUSHION,
+} from "@/features/workspace/constants/workspace-tab-dimensions";
 import { useWorkspaceStore } from "@/features/workspace/stores/workspace-store";
 import { WorkspaceTab } from "./workspace-tab";
 
@@ -16,18 +24,21 @@ export function WorkspaceTabStrip() {
 
   const tabWidth = useMemo(() => {
     if (workspaces.length === 0) {
-      return 88;
+      return WORKSPACE_TAB_EMPTY_WIDTH;
     }
 
-    const padding = 8;
-    const gap = 4;
-    const trailingCushion = 10;
-    const interTabGap = Math.max(0, (workspaces.length - 1) * gap);
+    const interTabGap = Math.max(
+      0,
+      (workspaces.length - 1) * WORKSPACE_TAB_GAP,
+    );
     const availableForTabs =
-      tabAreaWidth - padding - trailingCushion - interTabGap;
+      tabAreaWidth -
+      WORKSPACE_TAB_INNER_PADDING -
+      WORKSPACE_TAB_TRAILING_CUSHION -
+      interTabGap;
     const width = availableForTabs / workspaces.length;
 
-    return Math.max(48, Math.min(132, width || 0));
+    return Math.max(WORKSPACE_TAB_MIN_WIDTH, Math.min(WORKSPACE_TAB_MAX_WIDTH, width || 0));
   }, [tabAreaWidth, workspaces.length]);
 
   return (

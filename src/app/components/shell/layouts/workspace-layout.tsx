@@ -7,7 +7,7 @@ type WorkspaceLayoutProps = {
 
 export function WorkspaceLayout({ inspectorVisible }: WorkspaceLayoutProps) {
   return (
-    <div className="grid min-h-0 grid-rows-[max-content_1fr]">
+    <div className="grid min-h-0 grid-rows-app-shell">
       <AppTitleBar />
       <div className="grid min-h-0 grid-cols-1">
         <WorkspaceContent inspectorVisible={inspectorVisible} />

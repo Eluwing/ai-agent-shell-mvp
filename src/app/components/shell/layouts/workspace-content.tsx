@@ -14,7 +14,7 @@ export function WorkspaceContent({
       <div
         className={
           inspectorVisible
-            ? "grid flex-1 grid-cols-[1fr_360px] gap-4"
+            ? "grid flex-1 grid-cols-workspace-inspector gap-layout-gutter"
             : "grid flex-1 grid-cols-1"
         }
       >

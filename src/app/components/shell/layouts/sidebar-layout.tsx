@@ -8,7 +8,7 @@ type SidebarLayoutProps = {
 
 export function SidebarLayout({ inspectorVisible }: SidebarLayoutProps) {
   return (
-    <div className="grid min-h-screen grid-cols-[240px_1fr] grid-rows-[max-content_1fr]">
+    <div className="grid min-h-screen grid-cols-workspace-sidebar grid-rows-app-shell">
       <SidebarRail />
       <WorkspaceTitleBar />
       <WorkspaceContent inspectorVisible={inspectorVisible} />

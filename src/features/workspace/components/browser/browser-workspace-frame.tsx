@@ -112,7 +112,7 @@ export function BrowserWorkspaceFrame() {
 
   return (
     <div className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden rounded-lg border border-card-border bg-card text-card-fg">
-      <div className="flex h-11 items-center gap-2 border-b border-card-border px-4">
+      <div className="flex h-browser-toolbar items-center gap-2 border-b border-card-border px-browser-horizontal">
         <div className="flex items-center gap-1.5">
           <button
             type="button"
@@ -141,7 +141,7 @@ export function BrowserWorkspaceFrame() {
             <RotateCw className="size-4" />
           </button>
         </div>
-        <div className="ml-2 flex min-w-0 flex-1 items-center rounded-full border border-card-border bg-app-bg px-4 py-2 text-sm text-app-fg/80 shadow-sm">
+        <div className="ml-2 flex min-w-0 flex-1 items-center rounded-full border border-card-border bg-app-bg px-browser-horizontal py-2 text-sm text-app-fg/80 shadow-sm">
           <span
             aria-hidden="true"
             className={`mr-3 inline-flex size-4 items-center justify-center ${

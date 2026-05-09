@@ -1,0 +1,48 @@
+:root {
+  --titlebar-leading-space: 86px;
+  --workspace-sidebar-width: 240px;
+  --workspace-inspector-width: 360px;
+  --app-titlebar-height: 36px;
+  --browser-toolbar-height: 44px;
+  --layout-gutter: 20px;
+  --titlebar-horizontal-padding: 12px;
+  --browser-horizontal-padding: 16px;
+}
+
+@layer utilities {
+  .h-app-titlebar {
+    height: var(--app-titlebar-height);
+  }
+
+  .h-browser-toolbar {
+    height: var(--browser-toolbar-height);
+  }
+
+  .pl-titlebar-leading {
+    padding-left: var(--titlebar-leading-space);
+  }
+
+  .px-titlebar-horizontal {
+    padding-inline: var(--titlebar-horizontal-padding);
+  }
+
+  .px-browser-horizontal {
+    padding-inline: var(--browser-horizontal-padding);
+  }
+
+  .py-layout-gutter {
+    padding-block: var(--layout-gutter);
+  }
+
+  .grid-cols-workspace-sidebar {
+    grid-template-columns: var(--workspace-sidebar-width) 1fr;
+  }
+
+  .grid-rows-app-shell {
+    grid-template-rows: var(--app-titlebar-height) 1fr;
+  }
+
+  .grid-cols-workspace-inspector {
+    grid-template-columns: 1fr var(--workspace-inspector-width);
+  }
+}

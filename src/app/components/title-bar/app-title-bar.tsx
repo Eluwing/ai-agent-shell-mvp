@@ -8,7 +8,7 @@ const noDragStyle = { WebkitAppRegion: "no-drag" } as CSSProperties;
 
 export function AppTitleBar() {
   return (
-    <header className="grid h-9 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 border-b border-shell-border bg-shell-bg px-3 pr-2 pl-[86px] text-shell-fg backdrop-blur">
+    <header className="grid h-app-titlebar grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 border-b border-shell-border bg-shell-bg pl-titlebar-leading pr-titlebar-horizontal text-shell-fg backdrop-blur">
       <div className="flex h-full shrink-0 items-center" style={dragStyle}>
         <AppTitleBarBrand />
       </div>
