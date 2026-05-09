@@ -15,7 +15,7 @@ export function AppShell() {
   }, [locale]);
 
   return (
-    <main className="min-h-screen bg-app-bg text-app-fg">
+    <main className="flex min-h-screen flex-col bg-app-bg text-app-fg">
       {workspaceSidebarVisible ? (
         <SidebarLayout inspectorVisible={inspectorVisible} />
       ) : (

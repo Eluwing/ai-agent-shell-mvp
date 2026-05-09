@@ -10,12 +10,12 @@ export function WorkspaceContent({
   inspectorVisible,
 }: WorkspaceContentProps) {
   return (
-    <section className="flex min-w-0 flex-col">
+    <section className="flex flex-1 min-h-0 min-w-0 flex-col">
       <div
         className={
           inspectorVisible
-            ? "grid flex-1 grid-cols-workspace-inspector gap-layout-gutter"
-            : "grid flex-1 grid-cols-1"
+            ? "grid flex-1 min-h-0 grid-cols-workspace-inspector gap-layout-gutter"
+            : "grid flex-1 min-h-0 grid-cols-1"
         }
       >
         <BrowserWorkspaceFrame />
