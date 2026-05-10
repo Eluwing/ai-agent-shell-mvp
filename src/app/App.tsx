@@ -2,10 +2,12 @@ import { useLayoutEffect } from "react";
 import { AppShell } from "@/app/components/shell/app-shell";
 import { Providers } from "@/app/providers/providers";
 import { THEME_STORAGE_KEY } from "@/features/layout/constants/theme-storage";
+import { PipWindowSurface } from "@/features/layout/components/root/pip-window-surface";
 import { useLayoutStore } from "@/features/layout/stores/layout-store";
 
 export function App() {
   const themeMode = useLayoutStore((state) => state.themeMode);
+  const surface = new URLSearchParams(window.location.search).get("surface");
 
   useLayoutEffect(() => {
     const root = document.documentElement;
@@ -23,7 +25,7 @@ export function App() {
 
   return (
     <Providers>
-      <AppShell />
+      {surface === "pip" ? <PipWindowSurface /> : <AppShell />}
     </Providers>
   );
 }

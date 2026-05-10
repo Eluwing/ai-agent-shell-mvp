@@ -3,15 +3,8 @@ import { openWorkspace } from "@/features/workspace/actions/open-workspace";
 import { useActiveWorkspace } from "@/features/workspace/hooks/use-active-workspace";
 import { ChevronLeft, ChevronRight, Lock, RotateCw } from "lucide-react";
 import { useTranslation } from "@/shared/i18n/hooks/use-translation";
-import { cn } from "@/shared/lib/cn";
 
-type BrowserWorkspaceFrameProps = {
-  viewportClassName?: string;
-};
-
-export function BrowserWorkspaceFrame({
-  viewportClassName,
-}: BrowserWorkspaceFrameProps) {
+export function BrowserWorkspaceFrame() {
   const activeWorkspace = useActiveWorkspace();
   const { t } = useTranslation();
   const browserViewportRef = useRef<HTMLDivElement>(null);
@@ -168,10 +161,7 @@ export function BrowserWorkspaceFrame({
       </div>
       <div
         ref={browserViewportRef}
-        className={cn(
-          "relative min-h-0 flex-1 overflow-hidden bg-app-bg",
-          viewportClassName,
-        )}
+        className="relative min-h-0 flex-1 overflow-hidden bg-app-bg"
       />
     </div>
   );
