@@ -3,6 +3,7 @@ const { registerWorkspaceHandlers } = require("../workspace/workspace-handlers.c
 const { registerBrowserHandlers } = require("../browser/browser-handlers.cjs");
 const { registerAgentHandlers } = require("../agent-runtime/runs/agent-handlers.cjs");
 const { registerWindowHandlers } = require("../window/window-handlers.cjs");
+const { registerLayoutHandlers } = require("../layout/layout-handlers.cjs");
 
 function registerIpcHandlers(context) {
   registerRuntimeHandlers(context);
@@ -10,6 +11,7 @@ function registerIpcHandlers(context) {
   registerBrowserHandlers(context);
   registerAgentHandlers(context);
   registerWindowHandlers(context);
+  registerLayoutHandlers(context);
 }
 
 module.exports = {
