@@ -5,7 +5,7 @@ import { cn } from "@/shared/lib/cn";
 type ToolbarSegmentProps = {
   active?: boolean;
   ariaLabel: string;
-  onClick: () => void;
+  onClick?: () => void;
   icon?: React.ReactElement<{ className?: string }>;
 };
 
@@ -24,6 +24,7 @@ export function ToolbarSegment({
   return (
     <Button
       aria-pressed={active}
+      aria-disabled={!onClick}
       aria-label={ariaLabel}
       className={cn(
         "h-6 rounded-md border-0 px-1.5 py-0 shadow-none",

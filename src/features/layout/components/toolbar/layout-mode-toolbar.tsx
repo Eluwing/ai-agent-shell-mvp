@@ -1,7 +1,9 @@
-import { Monitor, PanelRight, PictureInPicture2 } from "lucide-react";
+import { PanelRight } from "lucide-react";
 import { useTranslation } from "@/shared/i18n/hooks/use-translation";
 import { useLayoutStore } from "@/features/layout/stores/layout-store";
 import { TitleBarControlGroup } from "@/features/layout/components/title-bar/title-bar-control-group";
+import { NativeModeButton } from "./native-mode-button";
+import { PipModeButton } from "./pip-mode-button";
 import { ToolbarSegment } from "./toolbar-segment";
 
 export function LayoutModeToolbar() {
@@ -11,17 +13,13 @@ export function LayoutModeToolbar() {
 
   return (
     <TitleBarControlGroup className="gap-0.5">
-      <ToolbarSegment
+      <NativeModeButton
         active={layoutMode === "native"}
-        ariaLabel={t("layout.native")}
         onClick={() => setLayoutMode("native")}
-        icon={<Monitor />}
       />
-      <ToolbarSegment
+      <PipModeButton
         active={layoutMode === "pip"}
-        ariaLabel={t("layout.pip")}
         onClick={() => setLayoutMode("pip")}
-        icon={<PictureInPicture2 />}
       />
       <ToolbarSegment
         active={layoutMode === "split"}
