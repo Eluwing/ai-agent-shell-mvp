@@ -13,7 +13,7 @@ export function AppTitleBar() {
         <AppTitleBarBrand />
       </div>
 
-      <div className="flex min-w-0 items-end gap-1 overflow-hidden" style={noDragStyle}>
+      <div className="min-w-0 self-end overflow-hidden" style={noDragStyle}>
         <AppTitleBarTabs />
       </div>
 
