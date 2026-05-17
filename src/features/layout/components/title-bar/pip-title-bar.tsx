@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react";
+import { AppTitleBarActions } from "@/features/layout/components/title-bar/app-title-bar-actions";
 import { NativeModeButton } from "@/features/layout/components/toolbar/native-mode-button";
 import { PipModeButton } from "@/features/layout/components/toolbar/pip-mode-button";
+import { TitleBarSection } from "./title-bar-section";
 
 const dragStyle = { WebkitAppRegion: "drag" } as CSSProperties;
 const noDragStyle = { WebkitAppRegion: "no-drag" } as CSSProperties;
@@ -15,11 +17,18 @@ export function PipTitleBar() {
       <div className="h-full min-w-28" style={dragStyle} />
       <div className="h-full w-full min-w-0" style={dragStyle} />
 
-      <div style={noDragStyle}>
+      <div className="flex items-center justify-between gap-3" style={noDragStyle}>
         <div className="flex items-center gap-0.5">
-          <NativeModeButton onClick={handleExitPip} />
-          <PipModeButton active />
+          <TitleBarSection withSeparator>
+            <NativeModeButton onClick={handleExitPip} />
+            <PipModeButton active />
+          </TitleBarSection>
+          <TitleBarSection>
+            <AppTitleBarActions compact />
+          </TitleBarSection>
         </div>
+
+        
       </div>
     </header>
   );
