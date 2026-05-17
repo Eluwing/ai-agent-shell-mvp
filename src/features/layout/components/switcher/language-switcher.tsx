@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/lib/cn";
@@ -14,10 +16,52 @@ export function LanguageSwitcher() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const [menuStyle, setMenuStyle] = useState<CSSProperties | null>(null);
+
+  useLayoutEffect(() => {
+    if (!open) {
+      setMenuStyle(null);
+      return;
+    }
+
+    const updatePosition = () => {
+      const trigger = rootRef.current;
+
+      if (!trigger) {
+        return;
+      }
+
+      const rect = trigger.getBoundingClientRect();
+      const top = Math.round(rect.bottom + 1);
+      const right = Math.max(Math.round(window.innerWidth - rect.right), 8);
+
+      setMenuStyle({
+        position: "fixed",
+        top,
+        right,
+      });
+    };
+
+    updatePosition();
+
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [open]);
 
   useEffect(() => {
     const handlePointerDown = (event: MouseEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) {
+      const target = event.target as Node;
+
+      if (
+        !rootRef.current?.contains(target) &&
+        !menuRef.current?.contains(target)
+      ) {
         setOpen(false);
       }
     };
@@ -57,41 +101,46 @@ export function LanguageSwitcher() {
         <span className="sr-only">{t("language.label")}</span>
       </Button>
 
-      {open ? (
-        <div
-          className="absolute right-0 z-50 min-w-20 overflow-hidden rounded-lg border border-shell-border bg-card p-0.5 shadow-md shadow-black/10"
-          role="menu"
-          aria-label={t("language.label")}
-        >
-          {(Object.keys(localeOptions) as Locale[]).map((nextLocale) => {
-            const selected = locale === nextLocale;
+      {open && menuStyle
+        ? createPortal(
+            <div
+              ref={menuRef}
+              className="z-[1000] min-w-20 overflow-hidden rounded-lg border border-shell-border bg-card p-0.5 shadow-md shadow-black/10"
+              role="menu"
+              aria-label={t("language.label")}
+              style={menuStyle}
+            >
+              {(Object.keys(localeOptions) as Locale[]).map((nextLocale) => {
+                const selected = locale === nextLocale;
 
-            return (
-              <button
-                key={nextLocale}
-                className={cn(
-                  "flex h-8 w-full items-center gap-1.5 rounded-md px-2 text-left transition-colors",
-                  selected
-                    ? "bg-button-primary text-button-primary-fg"
-                    : "text-shell-fg hover:bg-button-secondary-hover hover:text-shell-fg",
-                )}
-                onClick={() => {
-                  setLocale(nextLocale);
-                  setOpen(false);
-                }}
-                role="menuitemradio"
-                aria-checked={selected}
-                type="button"
-              >
-                {getLocaleIcon(nextLocale, "size-3")}
-                <span className="text-[10px] font-semibold">
-                  {localeOptions[nextLocale].label}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      ) : null}
+                return (
+                  <button
+                    key={nextLocale}
+                    className={cn(
+                      "flex h-8 w-full items-center gap-1.5 rounded-md px-2 text-left transition-colors",
+                      selected
+                        ? "bg-button-primary text-button-primary-fg"
+                        : "text-shell-fg hover:bg-button-secondary-hover hover:text-shell-fg",
+                    )}
+                    onClick={() => {
+                      setLocale(nextLocale);
+                      setOpen(false);
+                    }}
+                    role="menuitemradio"
+                    aria-checked={selected}
+                    type="button"
+                  >
+                    {getLocaleIcon(nextLocale, "size-3")}
+                    <span className="text-[10px] font-semibold">
+                      {localeOptions[nextLocale].label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }
