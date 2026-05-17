@@ -13,6 +13,7 @@ function createWorkspaceViewManager({ mainWindow, logger }) {
   const boundsByWorkspaceId = new Map();
   const navigationStateByWorkspaceId = new Map();
   let activeWorkspaceId = null;
+  let activeHostWindow = mainWindow;
 
   function normalizeUrl(url) {
     return url === "about:blank" ? "https://www.google.com" : url;
@@ -73,12 +74,12 @@ function createWorkspaceViewManager({ mainWindow, logger }) {
       const previousView = views.get(activeWorkspaceId);
 
       if (previousView) {
-        mainWindow.contentView.removeChildView(previousView);
+        activeHostWindow.contentView.removeChildView(previousView);
       }
     }
 
     if (activeWorkspaceId !== workspaceId) {
-      mainWindow.contentView.addChildView(view);
+      activeHostWindow.contentView.addChildView(view);
       activeWorkspaceId = workspaceId;
     }
 
@@ -115,12 +116,80 @@ function createWorkspaceViewManager({ mainWindow, logger }) {
         sessionPartition: sessionManager.partitionForWorkspace(input.workspaceId),
       };
     },
+    moveActiveWorkspaceViewToWindow(targetWindow, bounds) {
+      if (!targetWindow || !activeWorkspaceId) {
+        return {
+          moved: false,
+          workspaceId: activeWorkspaceId,
+        };
+      }
+
+      const view = views.get(activeWorkspaceId);
+
+      if (!view) {
+        return {
+          moved: false,
+          workspaceId: activeWorkspaceId,
+        };
+      }
+
+      activeHostWindow.contentView.removeChildView(view);
+      targetWindow.contentView.addChildView(view);
+      activeHostWindow = targetWindow;
+
+      if (bounds) {
+        boundsByWorkspaceId.set(activeWorkspaceId, bounds);
+        view.setBounds(bounds);
+      }
+
+      return {
+        moved: true,
+        workspaceId: activeWorkspaceId,
+      };
+    },
+    returnActiveWorkspaceViewToMainWindow() {
+      if (!activeWorkspaceId || activeHostWindow === mainWindow) {
+        return {
+          moved: false,
+          workspaceId: activeWorkspaceId,
+        };
+      }
+
+      const view = views.get(activeWorkspaceId);
+
+      if (!view) {
+        activeHostWindow = mainWindow;
+        return {
+          moved: false,
+          workspaceId: activeWorkspaceId,
+        };
+      }
+
+      activeHostWindow.contentView.removeChildView(view);
+      mainWindow.contentView.addChildView(view);
+      activeHostWindow = mainWindow;
+
+      const bounds = boundsByWorkspaceId.get(activeWorkspaceId);
+
+      if (bounds) {
+        view.setBounds(bounds);
+      }
+
+      return {
+        moved: true,
+        workspaceId: activeWorkspaceId,
+      };
+    },
     setWorkspaceViewBounds(input) {
       boundsByWorkspaceId.set(input.workspaceId, input.bounds);
 
       const view = views.get(input.workspaceId);
 
-      if (view && activeWorkspaceId === input.workspaceId) {
+      if (
+        view &&
+        activeWorkspaceId === input.workspaceId &&
+        activeHostWindow === mainWindow
+      ) {
         view.setBounds(input.bounds);
       }
 

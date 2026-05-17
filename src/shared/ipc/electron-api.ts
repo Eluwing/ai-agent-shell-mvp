@@ -17,6 +17,7 @@ import type {
   SetWorkspaceViewBoundsInput,
 } from "./contracts/workspace-contract";
 import type { RuntimeVersionsResponse } from "./contracts/runtime-contract";
+import type { LayoutModeChangedEvent } from "./contracts/layout-contract";
 
 export type ElectronApi = {
   runtime: {
@@ -26,6 +27,13 @@ export type ElectronApi = {
     minimize: () => Promise<void>;
     toggleMaximize: () => Promise<{ maximized: boolean }>;
     close: () => Promise<void>;
+  };
+  layout: {
+    enterPip: () => Promise<{ enabled: boolean }>;
+    exitPip: () => Promise<{ enabled: boolean; workspaceId?: string | null }>;
+    onModeChanged: (
+      callback: (input: LayoutModeChangedEvent) => void,
+    ) => () => void;
   };
   workspace: {
     open: (input: OpenWorkspaceInput) => Promise<OpenWorkspaceResult>;

@@ -1,9 +1,9 @@
 import { Plus } from "lucide-react";
-import { TitleBarLayoutProvider } from "@/app/context/title-bar/title-bar-layout-context";
-import { useElementWidth } from "@/app/hooks/use-element-width";
+import { TitleBarLayoutProvider } from "@/features/layout/components/title-bar/title-bar-layout-context";
 import { WorkspaceTabStrip } from "@/features/workspace/components/tabs/workspace-tab-strip";
 import { useWorkspaceStore } from "@/features/workspace/stores/workspace-store";
 import { Button } from "@/shared/components/ui/button";
+import { useElementWidth } from "@/shared/hooks/use-element-width";
 import { useTranslation } from "@/shared/i18n/hooks/use-translation";
 
 export function AppTitleBarTabs() {

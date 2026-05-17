@@ -12,6 +12,18 @@ function createElectronApi() {
       toggleMaximize: () => ipcRenderer.invoke("window:toggle-maximize"),
       close: () => ipcRenderer.invoke("window:close"),
     },
+    layout: {
+      enterPip: () => ipcRenderer.invoke("layout:enter-pip"),
+      exitPip: () => ipcRenderer.invoke("layout:exit-pip"),
+      onModeChanged: (callback) => {
+        const listener = (_event, input) => callback(input);
+        ipcRenderer.on("layout:mode-changed", listener);
+
+        return () => {
+          ipcRenderer.removeListener("layout:mode-changed", listener);
+        };
+      },
+    },
     workspace: {
       open: (input) => ipcRenderer.invoke("workspace:open", input),
       setViewBounds: (input) =>
