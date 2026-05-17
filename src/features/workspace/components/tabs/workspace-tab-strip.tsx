@@ -1,17 +1,25 @@
 import { useMemo } from "react";
 import { useTitleBarLayout } from "@/features/layout/components/title-bar/title-bar-layout-context";
 import {
+  WORKSPACE_TAB_ADD_BUTTON_SPACE,
   WORKSPACE_TAB_EMPTY_WIDTH,
   WORKSPACE_TAB_GAP,
   WORKSPACE_TAB_INNER_PADDING,
-  WORKSPACE_TAB_MAX_WIDTH,
   WORKSPACE_TAB_MIN_WIDTH,
   WORKSPACE_TAB_TRAILING_CUSHION,
 } from "@/features/workspace/constants/workspace-tab-dimensions";
 import { useWorkspaceStore } from "@/features/workspace/stores/workspace-store";
+import { Button } from "@/shared/components/ui/button";
+import { useTranslation } from "@/shared/i18n/hooks/use-translation";
+import { Plus } from "lucide-react";
 import { WorkspaceTab } from "./workspace-tab";
 
-export function WorkspaceTabStrip() {
+type WorkspaceTabStripProps = {
+  onAddWorkspace: () => void;
+};
+
+export function WorkspaceTabStrip({ onAddWorkspace }: WorkspaceTabStripProps) {
+  const { t } = useTranslation();
   const { tabAreaWidth } = useTitleBarLayout();
   const workspaces = useWorkspaceStore((state) => state.workspaces);
   const activeWorkspaceId = useWorkspaceStore(
@@ -35,14 +43,15 @@ export function WorkspaceTabStrip() {
       tabAreaWidth -
       WORKSPACE_TAB_INNER_PADDING -
       WORKSPACE_TAB_TRAILING_CUSHION -
+      WORKSPACE_TAB_ADD_BUTTON_SPACE -
       interTabGap;
-    const width = availableForTabs / workspaces.length;
+    const width = Math.floor(availableForTabs / workspaces.length);
 
-    return Math.max(WORKSPACE_TAB_MIN_WIDTH, Math.min(WORKSPACE_TAB_MAX_WIDTH, width || 0));
+    return Math.max(WORKSPACE_TAB_MIN_WIDTH, width || 0);
   }, [tabAreaWidth, workspaces.length]);
 
   return (
-    <div className="flex min-w-0 items-end gap-1 overflow-hidden rounded-t-2xl bg-tab-strip px-1 pr-2 pt-1">
+    <div className="flex min-w-0 flex-1 items-end gap-1 overflow-hidden rounded-t-2xl bg-tab-strip px-1 pr-2 pt-1">
       <div className="flex min-w-0 flex-1 items-end gap-1 overflow-hidden">
         {workspaces.map((workspace) => (
           <WorkspaceTab
@@ -55,6 +64,15 @@ export function WorkspaceTabStrip() {
           />
         ))}
       </div>
+
+      <Button
+        type="button"
+        aria-label={t("workspace.addTab")}
+        className="mb-1 inline-flex size-8 shrink-0 items-center justify-center rounded-full text-shell-fg/70 transition-colors hover:bg-button-outline-hover hover:text-shell-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-button-primary/30 focus-visible:ring-offset-0"
+        onClick={onAddWorkspace}
+      >
+        <Plus className="size-4" />
+      </Button>
     </div>
   );
 }
