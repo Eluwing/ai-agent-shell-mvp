@@ -3,12 +3,19 @@ import { WorkspaceTabStrip } from "@/features/workspace/components/tabs/workspac
 import { useWorkspaceStore } from "@/features/workspace/stores/workspace-store";
 import { useElementWidth } from "@/shared/hooks/use-element-width";
 
-export function AppTitleBarTabs() {
+type AppTitleBarTabsProps = {
+  maxTabWidth: number;
+};
+
+export function AppTitleBarTabs({ maxTabWidth }: AppTitleBarTabsProps) {
   const [tabsViewportRef, tabAreaWidth] = useElementWidth<HTMLDivElement>();
   const addWorkspace = useWorkspaceStore((state) => state.addWorkspace);
 
   return (
-    <TitleBarLayoutProvider tabAreaWidth={tabAreaWidth}>
+    <TitleBarLayoutProvider
+      maxTabWidth={maxTabWidth}
+      tabAreaWidth={tabAreaWidth}
+    >
       <div
         ref={tabsViewportRef}
         className="flex flex-1 min-w-0 items-end gap-1 overflow-hidden"

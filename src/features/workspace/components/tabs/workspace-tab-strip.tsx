@@ -20,7 +20,7 @@ type WorkspaceTabStripProps = {
 
 export function WorkspaceTabStrip({ onAddWorkspace }: WorkspaceTabStripProps) {
   const { t } = useTranslation();
-  const { tabAreaWidth } = useTitleBarLayout();
+  const { tabAreaWidth, maxTabWidth } = useTitleBarLayout();
   const workspaces = useWorkspaceStore((state) => state.workspaces);
   const activeWorkspaceId = useWorkspaceStore(
     (state) => state.activeWorkspaceId,
@@ -47,8 +47,11 @@ export function WorkspaceTabStrip({ onAddWorkspace }: WorkspaceTabStripProps) {
       interTabGap;
     const width = Math.floor(availableForTabs / workspaces.length);
 
-    return Math.max(WORKSPACE_TAB_MIN_WIDTH, width || 0);
-  }, [tabAreaWidth, workspaces.length]);
+    return Math.max(
+      WORKSPACE_TAB_MIN_WIDTH,
+      Math.min(maxTabWidth, width || 0),
+    );
+  }, [maxTabWidth, tabAreaWidth, workspaces.length]);
 
   return (
     <div className="flex min-w-0 flex-1 items-end gap-1 overflow-hidden rounded-t-2xl bg-tab-strip px-1 pr-2 pt-1">
