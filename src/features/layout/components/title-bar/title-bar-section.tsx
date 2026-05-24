@@ -10,11 +10,11 @@ export function TitleBarSection({
   withSeparator = false,
 }: TitleBarSectionProps) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center">
       {children}
       {withSeparator ? (
         <div
-          className="h-5 w-px bg-shell-border/30"
+          className="h-5 w-px bg-shell-border/30 ml-2 mr-2"
           aria-hidden="true"
         />
       ) : null}

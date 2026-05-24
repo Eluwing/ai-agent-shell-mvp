@@ -2,6 +2,7 @@ import { createContext, useContext, type ReactNode } from "react";
 
 type TitleBarLayoutContextValue = {
   tabAreaWidth: number;
+  maxTabWidth: number;
 };
 
 const TitleBarLayoutContext = createContext<TitleBarLayoutContextValue | null>(
@@ -11,14 +12,16 @@ const TitleBarLayoutContext = createContext<TitleBarLayoutContextValue | null>(
 type TitleBarLayoutProviderProps = {
   children: ReactNode;
   tabAreaWidth: number;
+  maxTabWidth: number;
 };
 
 export function TitleBarLayoutProvider({
   children,
   tabAreaWidth,
+  maxTabWidth,
 }: TitleBarLayoutProviderProps) {
   return (
-    <TitleBarLayoutContext.Provider value={{ tabAreaWidth }}>
+    <TitleBarLayoutContext.Provider value={{ tabAreaWidth, maxTabWidth }}>
       {children}
     </TitleBarLayoutContext.Provider>
   );
