@@ -12,10 +12,7 @@ export function WorkspaceTitleBar() {
         <AppTitleBarTabs maxTabWidth={WORKSPACE_TAB_MAX_WIDTH_WORKSPACE} />
       </div>
 
-      <div
-        className="flex shrink-0 items-center gap-2 translate-y-px justify-self-end"
-        style={noDragStyle}
-      >
+      <div className="flex shrink-0 items-center gap-2 justify-self-end" style={noDragStyle}>
         <AppTitleBarActions />
       </div>
     </div>

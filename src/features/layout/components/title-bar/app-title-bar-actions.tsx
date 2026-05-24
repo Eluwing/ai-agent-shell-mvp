@@ -13,11 +13,11 @@ export function AppTitleBarActions({
 }: AppTitleBarActionsProps) {
   if (compact) {
     return (
-      <div className="flex shrink-0 items-center translate-y-px justify-self-end">
+      <div className="flex shrink-0 items-center justify-self-end">
         <TitleBarSection withSeparator>
           <ThemeToggleButton />
         </TitleBarSection>
-        <TitleBarSection >
+        <TitleBarSection>
           <LanguageSwitcher />
         </TitleBarSection>
       </div>
@@ -25,7 +25,7 @@ export function AppTitleBarActions({
   }
 
   return (
-    <div className="flex shrink-0 items-center translate-y-px justify-self-end">
+    <div className="flex shrink-0 items-center justify-self-end">
       <TitleBarSection withSeparator>
         <ViewControls />
       </TitleBarSection>
