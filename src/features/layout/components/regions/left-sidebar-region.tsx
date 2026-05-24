@@ -1,5 +1,5 @@
 import { AppTitleBarBrand } from "@/features/layout/components/title-bar/app-title-bar-brand";
-import { WorkspaceSwitcher } from "@/features/workspace/components/sidebar/workspace-switcher";
+import { ChatHistorySidebar } from "@/features/chat-history/components/chat-history-sidebar";
 
 export function LeftSidebarRegion() {
   return (
@@ -9,7 +9,7 @@ export function LeftSidebarRegion() {
       </div>
 
       <div className="flex-1 px-browser-horizontal py-layout-gutter">
-        <WorkspaceSwitcher />
+        <ChatHistorySidebar />
       </div>
     </aside>
   );
