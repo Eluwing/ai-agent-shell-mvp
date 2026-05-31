@@ -43,6 +43,8 @@ export const translations: Record<Locale, Record<string, string>> = {
     "runtime.title": "Runtime",
     "runtime.sqlite": "SQLite schema: ready",
     "runtime.openai": "OpenAI SDK: installed",
+    "chat.projects": "프로젝트",
+    "chat.newThread": "새 채팅",
   },
   ja: {
     "app.title": "AI Agent Mock",
@@ -80,6 +82,8 @@ export const translations: Record<Locale, Record<string, string>> = {
     "runtime.title": "Runtime",
     "runtime.sqlite": "SQLite schema: ready",
     "runtime.openai": "OpenAI SDK: installed",
+    "chat.projects": "プロジェクト",
+    "chat.newThread": "新しいチャット",
   },
   en: {
     "app.title": "AI Agent Mock",
@@ -117,5 +121,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "runtime.title": "Runtime",
     "runtime.sqlite": "SQLite schema: ready",
     "runtime.openai": "OpenAI SDK: installed",
+    "chat.projects": "Projects",
+    "chat.newThread": "New chat",
   },
 };
